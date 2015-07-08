@@ -1,6 +1,39 @@
 #:import ScrollBox devslib.scrollbox
 
+<InventoryItem>
+    txt_clave:txt_clave
+    txt_producto:txt_producto
+    txt_existencias:txt_existencias
+    txt_minimo:txt_minimo
+    txt_maximo:txt_maximo
+    txt_precio:txt_precio
+    size_hint_y: None
+    height: 40
+    TextInput:
+        size_hint_x: None
+        id: txt_clave
+    TextInput:
+        id: txt_producto
+    TextInput:
+        size_hint_x: None
+        id: txt_existencias
+    TextInput:
+        size_hint_x: None
+        id: txt_minimo
+    TextInput:
+        size_hint_x: None
+        id: txt_maximo
+    TextInput:
+        size_hint_x: None
+        id: txt_precio
+    Button:
+        size_hint_x: None
+        text: "+"
+        width: 40
+        on_press: root.addInventoryItem(self)
+
 <Inventory@BoxLayout>:
+    lst_inventory:lst_inventory
     padding: 30
     BoxLayout:
         orientation: 'vertical'
@@ -21,6 +54,9 @@
             Label: 
                 text: "Maximo"
                 size_hint_x: None
+            Label:
+                text: "Precio"
+                size_hint_x: None
             Label: 
                 text: "Add"
                 size_hint_x: None
@@ -28,22 +64,9 @@
         
         ScrollBox:
             orientation: "vertical"
-            BoxLayout:
-                size_hint_y: None
-                height: 40
-                TextInput: 
-                    size_hint_x: None
-                TextInput: 
-                TextInput: 
-                    size_hint_x: None
-                TextInput: 
-                    size_hint_x: None
-                TextInput: 
-                    size_hint_x: None
-                Button: 
-                    size_hint_x: None
-                    text: "+"
-                    width: 40
+            id: lst_inventory
+            InventoryItem:
+
             Label:
                 text: "Rest of content"
 
