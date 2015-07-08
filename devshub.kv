@@ -1,0 +1,152 @@
+#:import ScrollBox devslib.scrollbox
+
+<Inventory@BoxLayout>:
+    padding: 30
+    BoxLayout:
+        orientation: 'vertical'
+        
+        BoxLayout:
+            size_hint_y: None
+            Label: 
+                size_hint_x: None
+                text: "Clave"
+            Label: 
+                text: "Producto"
+            Label: 
+                text: "Existencias"
+                size_hint_x: None
+            Label: 
+                text: "Minimo"
+                size_hint_x: None
+            Label: 
+                text: "Maximo"
+                size_hint_x: None
+            Label: 
+                text: "Add"
+                size_hint_x: None
+                width: 40
+        
+        ScrollBox:
+            orientation: "vertical"
+            BoxLayout:
+                size_hint_y: None
+                height: 40
+                TextInput: 
+                    size_hint_x: None
+                TextInput: 
+                TextInput: 
+                    size_hint_x: None
+                TextInput: 
+                    size_hint_x: None
+                TextInput: 
+                    size_hint_x: None
+                Button: 
+                    size_hint_x: None
+                    text: "+"
+                    width: 40
+            Label:
+                text: "Rest of content"
+
+<AddClient>:
+    txt_name:txt_name
+    txt_direccion:txt_direccion
+    txt_telefono:txt_telefono
+    txt_ife:txt_ife
+    txt_monedero:txt_monedero
+    
+    orientation: "vertical"
+    padding: 20
+    spacing: 10
+    Label:
+        text: "Nombre:"
+    TextInput:
+        id: txt_name
+    Label:
+        text: "Direccion:"
+    TextInput:
+        id: txt_direccion
+    Label:
+        text: "Telefono:"
+    TextInput:
+        id: txt_telefono
+    Label:
+        text: "IFE:"
+    TextInput:
+        id: txt_ife
+    Label:
+        text: "Monedero:"
+    TextInput:
+        id: txt_monedero
+        
+    Button:
+        text: "Guardar"
+        on_press: app.root.saveClient(self)
+
+<Pos>:
+    orientation: "vertical"
+    padding: 30
+    BoxLayout:
+        size_hint_y: None
+        height: 40
+        Label:
+            text: "Cliente"
+        TextInput:
+    
+    BoxLayout:
+        orientation: 'vertical'
+        
+        BoxLayout:
+            Label: 
+                size_hint_x: None
+                text: "Cant"
+            Label: 
+                text: "Producto"
+            Label: 
+                text: "Precio"
+                size_hint_x: None
+            Label: 
+                text: "Total"
+                size_hint_x: None
+            Label: 
+                text: "Cant"
+                size_hint_x: None
+        
+        ScrollBox:
+        
+    BoxLayout:
+        size_hint_y: None
+        Label: 
+            text: "Total:"
+            
+        Button: 
+            size_hint_x: None
+            width: 150
+            text: "ACEPTAR"
+
+<Login@AnchorLayout>:
+    anchor_x: "center"
+    anchor_y: "center"
+    BoxLayout:
+        size_hint: (None, None)
+        size: (400,300)
+        orientation: "vertical"
+        spacing: 20
+        Label:
+            text: "Email"
+            size_hint_y: None
+            height: 30
+        TextInput:
+            
+            
+        Label:
+            text: "Contraseña"
+            size_hint_y: None
+            height: 30
+            
+        TextInput:
+            
+        Button:
+            text: "Login"
+            
+<DevsHub>:
+    Inventory:
