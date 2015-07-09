@@ -1,12 +1,17 @@
 #:import ScrollBox devslib.scrollbox
+#:import ImageButton devslib.utils
+#:import DatePicker datepicker
 
-<InventoryItem>
+<Clientes>:
+
+<InventoryItem>:
     txt_clave:txt_clave
     txt_producto:txt_producto
     txt_existencias:txt_existencias
     txt_minimo:txt_minimo
     txt_maximo:txt_maximo
     txt_precio:txt_precio
+    btn_action:btn_action
     size_hint_y: None
     height: 40
     TextInput:
@@ -27,39 +32,59 @@
         size_hint_x: None
         id: txt_precio
     Button:
+        id: btn_action
         size_hint_x: None
         text: "+"
         width: 40
         on_press: root.addInventoryItem(self)
 
-<Inventory@BoxLayout>:
+<Inventory>:
     lst_inventory:lst_inventory
     padding: 30
+    
+    canvas.before:            
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size 
+    
     BoxLayout:
         orientation: 'vertical'
         
         BoxLayout:
             size_hint_y: None
-            Label: 
+            height: 40
+            Label:
+                size_hint_x: None
+                text: "Buscar"
+            TextInput:
+            Button:
+                size_hint_x: None
+                text: "Filtrar"
+    
+        
+        BoxLayout:
+            size_hint_y: None
+            BlackLabel: 
                 size_hint_x: None
                 text: "Clave"
-            Label: 
+            BlackLabel: 
                 text: "Producto"
-            Label: 
+            BlackLabel: 
                 text: "Existencias"
                 size_hint_x: None
-            Label: 
+            BlackLabel: 
                 text: "Minimo"
                 size_hint_x: None
-            Label: 
+            BlackLabel: 
                 text: "Maximo"
                 size_hint_x: None
-            Label:
+            BlackLabel:
                 text: "Precio"
                 size_hint_x: None
-            Label: 
+            BlackLabel: 
                 text: "Add"
-                size_hint_x: None
                 width: 40
         
         ScrollBox:
@@ -67,8 +92,6 @@
             id: lst_inventory
             InventoryItem:
 
-            Label:
-                text: "Rest of content"
 
 <AddClient>:
     txt_name:txt_name
@@ -105,36 +128,85 @@
         text: "Guardar"
         on_press: app.root.saveClient(self)
 
+<BlackLabel@Label>:
+    size_hint_y: None
+    height: 40
+    color: (0,0,0,1)
+
+<NoteItem>:
+    txt_cant:txt_cant
+    txt_producto:txt_producto
+    txt_precio:txt_precio
+    txt_total:txt_total
+    btn_action:btn_action
+    size_hint_y: None
+    height: 40
+    TextInput:
+        size_hint_x: None
+        id: txt_cant
+    TextInput:
+        id: txt_producto
+    TextInput:
+        size_hint_x: None
+        id: txt_precio
+    TextInput:
+        size_hint_x: None
+        id: txt_total
+    Button:
+        id: btn_action
+        size_hint_x: None
+        text: "+"
+        width: 40
+        on_press: root.addNoteItem(self)
+
 <Pos>:
     orientation: "vertical"
     padding: 30
+    lst_note:lst_note
+    canvas.before:            
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size 
+    
     BoxLayout:
         size_hint_y: None
         height: 40
-        Label:
+        BlackLabel:
             text: "Cliente"
         TextInput:
+        
+        
+        ImageButton:
+            source: "plus.png"
+            size_hint_x: None
+            width:40
     
     BoxLayout:
         orientation: 'vertical'
-        
         BoxLayout:
-            Label: 
+            size_hint_y: None
+            BlackLabel: 
                 size_hint_x: None
                 text: "Cant"
-            Label: 
+            BlackLabel: 
                 text: "Producto"
-            Label: 
+            BlackLabel: 
                 text: "Precio"
                 size_hint_x: None
-            Label: 
+            BlackLabel: 
                 text: "Total"
                 size_hint_x: None
-            Label: 
-                text: "Cant"
+            BlackLabel: 
+                text: "+"
                 size_hint_x: None
+                width: 40
         
         ScrollBox:
+            id: lst_note
+            orientation: "vertical"
+            NoteItem:
         
     BoxLayout:
         size_hint_y: None
@@ -146,9 +218,137 @@
             width: 150
             text: "ACEPTAR"
 
+<TaskMenu>:
+    size_hint: (None,None)
+    size:(700,550)
+    title: "Detalles de tarea"
+    txt_tarea:txt_tarea
+    lst_status:lst_status
+    BoxLayout:
+        spacing: 10
+        orientation: "vertical"
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            Label:
+                text: "Editar tarea"
+            TextInput:
+                multiline: False
+                write_tab: False
+                id: txt_tarea
+                
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            Label:
+                text: "Status:"
+            ImageButton:
+                source: "plus.png"
+                size_hint_x: None
+                width:32
+            Spinner:
+                values: ("Pending", "In progress", "Done")
+                id: lst_status
+                
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            Label:
+                text: "Clase:"
+            Spinner:
+                values: ("Privado", "Publico")
+                text: "Privado"
+                
+        BoxLayout:
+            padding: 5
+            orientation: "vertical"
+            Label:
+                text: "Fecha limite"
+                size_hint_y: None
+                height: 40
+            DatePicker:
+        
+        Button:
+            text: "Guardar"
+            size_hint_y: None
+            height: 50
+            on_press: root.selfSave()
+            
+        Button:
+            text: "Eliminar"
+            size_hint_y: None
+            height: 50
+            on_press: root.selfDelete()
+
+<BattlePlanItem@BoxLayout>:
+    tasktext:tasktext
+    img_menu:img_menu
+    size_hint_y: None
+    height: 40
+    ImageButton:
+        id: img_menu
+        source: "menu_pending.png"
+        size_hint_x: None
+        width: 32
+        on_press: root.open_menu()
+    Label:
+        id: tasktext
+        color: (0,0,0,1)
+        text_size: self.width, None
+        size: self.texture_size
+        
+<BattlePlan>:
+    orientation: "vertical"
+    padding:20
+    spacing:20
+    tasks:tasks
+    tasktext:tasktext
+    
+    canvas.before:            
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size 
+    
+    Label:
+        font_size: 45
+        text: "Plan de batalla"
+        color:(0,0,0,1)
+        size_hint_y: None
+        height: 100
+    AnchorLayout:
+        size_hint_y: None
+        height: 40
+        anchor_x: "center"
+        anchor_y: "top"
+        BoxLayout:
+            TextInput:
+                size_hint_x: .8
+                multiline: False
+                id: tasktext
+                on_text_validate: root.addTask()
+                
+            ImageButton:
+                source: "update.png"
+                size_hint_x: None
+                width: 50
+        
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "top"
+
+        ScrollBox:
+            id: tasks
+            orientation: "vertical"
+            size_hint_x: None
+            width: 600
+
 <Login@AnchorLayout>:
     anchor_x: "center"
     anchor_y: "center"
+    txt_email:txt_email
+    txt_password:txt_password
     BoxLayout:
         size_hint: (None, None)
         size: (400,300)
@@ -159,17 +359,68 @@
             size_hint_y: None
             height: 30
         TextInput:
-            
-            
+            id: txt_email
+            multiline: False
+            write_tab: False
+            on_text_validate: root.txt_password.focus = True
+            text: "devsinc@hotmail.com"
         Label:
             text: "Contraseña"
             size_hint_y: None
             height: 30
             
         TextInput:
+            id: txt_password
+            password: True
+            multiline: False
+            write_tab: False
+            on_text_validate: app.root.do_login(root)
+            text: "seisdevs_2010"
             
         Button:
             text: "Login"
+            on_press: app.root.do_login(root)
             
+<Main>:
+    orientation: "vertical"
+    battleplan: battleplan
+    padding: 50
+    
+    canvas.before:            
+        Color:
+            rgba: 0.9, 0.9, 0.9, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size 
+            
+    BoxLayout:
+        size_hint_y: None
+        height: 40
+        Button:
+            text: "BattlePlan"
+            background_color: (0,0,0,1)
+            on_press: root.show_battleplan()
+        Button:
+            text: "Ventas"
+            on_press: root.show_ventas()
+        Button:
+            text: "Inventario"
+            on_press: root.show_inventario()
+        Button:
+            text: "Servicios"
+            on_press: root.show_servicios()
+        Button:
+            text: "Rentas"
+            on_press: root.show_rentas()
+        Button:
+            text: "Organizacion"
+            on_press: root.show_organizacion()
+        Button:
+            text: "Clientes"
+            on_press: root.show_clientes()
+    BattlePlan:
+        id: battleplan
+
+
 <DevsHub>:
-    Inventory:
+    Login:
