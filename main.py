@@ -51,6 +51,9 @@ class NoteItem(BoxLayout):
         
         table.add_widget(newitem, index=len(table.layout.children))
 
+    def on_completeproduct(self, w):
+        print w.text
+
 class InventoryItem(BoxLayout):
 
     def addInventoryItem(self, w):

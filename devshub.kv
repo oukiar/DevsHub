@@ -146,6 +146,7 @@
         id: txt_cant
     TextInput:
         id: txt_producto
+        on_text: root.on_completeproduct(self)
     TextInput:
         size_hint_x: None
         id: txt_precio
@@ -176,7 +177,6 @@
         BlackLabel:
             text: "Cliente"
         TextInput:
-        
         
         ImageButton:
             source: "plus.png"
