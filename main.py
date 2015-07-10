@@ -53,6 +53,9 @@ class NoteItem(BoxLayout):
 
     def on_completeproduct(self, w):
         print w.text
+        if len(w.text) > 2:
+            print "Searching: " + w.text
+
 
 class InventoryItem(BoxLayout):
 
