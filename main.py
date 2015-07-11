@@ -23,17 +23,78 @@ register("xIYoHZ0xgLwWIMWzQWPFtxrsZhzmpIQCFCAEJZch", "dqm0KGlhpaK9E0QoGi4dAMWmKu
 Clientes = Object.factory("Clientes")
 Inventarios = Object.factory("Inventarios")
 Tareas = Object.factory("Tareas")
+Notas = Object.factory("Notas")
 
 class AddClient(BoxLayout):
     pass
 
-class Clientes(BoxLayout):
-    pass
 
 class Pos(BoxLayout):
     def hacerNota(self):
         print "Realizando nota"
+        nota = Notas()
+        nota.PUser = devshub.root.user
+        nota.Total = self.txt_total.text
         
+        products = []
+        
+        for i in self.lst_note.layout.children:
+            print i.txt_producto.text
+            
+            products.append({
+                            "Cantidad":i.txt_cant.text,
+                            "Product":i.txt_producto.text,
+                            "Precio":i.txt_precio.text,
+                            "Total":i.txt_total.text,
+                            })
+        
+        nota.Productos = products
+        
+        nota.save()
+        
+        
+    def on_completeclient(self, w):
+        
+        if not hasattr(self, "dropdown"):
+            self.dropdown = DropDown()
+        
+        if len(w.text) > 2:
+            
+            self.dropdown.clear_widgets()
+            
+            found = False
+            
+            for item in devshub.root.clientes:
+                if w.text.upper() in item.Name.upper():
+                    but = WhiteButton(text=item.Name, size_hint_y=None, height=40)
+                    but.bind(on_press=self.fillClient)
+                    but.Cliente = item
+                    self.dropdown.add_widget(but)
+                    found = True
+                    print found
+                    
+            if found:
+                self.dropdown.open(w)
+                
+                
+    def fillClient(self, w):
+        
+        self.dropdown.dismiss()
+        self.txt_client.text = w.text
+        
+        self.img_button.source = "ok.png"
+        
+        self.cliente = w.Cliente
+        
+    def addClient(self):
+        print "Adding the client: " + self.txt_client.text
+        
+        self.cliente = Clientes()
+        self.cliente.Name = self.txt_client.text
+        self.cliente.PUser = devshub.root.user
+        self.cliente.save()
+        
+        self.img_button.source = "ok.png"
 
 class WhiteButton(Button):
     pass
@@ -62,6 +123,8 @@ class NoteItem(BoxLayout):
         table = self.parent.parent.parent.parent.lst_note
         
         table.add_widget(newitem, index=len(table.layout.children))
+        
+        devshub.root.main.ventas.txt_total.text = str(float(devshub.root.main.ventas.txt_total.text) + float(w.parent.txt_total.text))
 
     def on_completeproduct(self, w):
         print w.text
@@ -271,9 +334,9 @@ class Main(BoxLayout):
         else:
             self.remove_widget(self.battleplan)
             
-        self.clientes = Clientes()
-        self.add_widget(self.clientes)
-        self.section = self.clientes
+        self.addclient = AddClient()
+        self.add_widget(self.addclient)
+        self.section = self.addclient
 
 class DevsHub(FloatLayout):
 
@@ -298,10 +361,12 @@ class DevsHub(FloatLayout):
         self.remove_widget(login)
         
         self.main = Main()
+        self.main.txt_username.text = self.user.username
         self.main.battleplan.updateList()
         self.add_widget(self.main)
         
         self.inventario = Inventarios.Query.filter(PUser__in=[self.user])
+        self.clientes = Clientes.Query.filter(PUser__in=[self.user])
 
 if __name__ == "__main__":
     

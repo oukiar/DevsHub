@@ -17,11 +17,17 @@
     TextInput:
         size_hint_x: None
         id: txt_clave
+        multiline: False
+        write_tab: False
     TextInput:
         id: txt_producto
+        multiline: False
+        write_tab: False
     TextInput:
         size_hint_x: None
         id: txt_existencias
+        multiline: False
+        write_tab: False
     TextInput:
         size_hint_x: None
         id: txt_minimo
@@ -52,10 +58,17 @@
     BoxLayout:
         orientation: 'vertical'
         
+        canvas.before:            
+            Color:
+                rgba: .96, .96, .96, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size 
+        
         BoxLayout:
             size_hint_y: None
             height: 40
-            Label:
+            BlackLabel:
                 size_hint_x: None
                 text: "Buscar"
             TextInput:
@@ -104,29 +117,29 @@
     orientation: "vertical"
     padding: 20
     spacing: 10
-    Label:
+    BlackLabel:
         text: "Nombre:"
     TextInput:
         id: txt_name
-    Label:
+    BlackLabel:
         text: "Direccion:"
     TextInput:
         id: txt_direccion
-    Label:
+    BlackLabel:
         text: "Telefono:"
     TextInput:
         id: txt_telefono
-    Label:
+    BlackLabel:
         text: "IFE:"
     TextInput:
         id: txt_ife
-    Label:
+    BlackLabel:
         text: "Monedero:"
     TextInput:
         id: txt_monedero
         
     Button:
-        text: "Guardar"
+        text: "Agregar"
         on_press: app.root.saveClient(self)
 
 <BlackLabel@Label>:
@@ -135,7 +148,7 @@
     color: (0,0,0,1)
 
 <WhiteButton>:
-    background_color: (.95,.95,.95,1)
+    background_color: (1,1,1,1)
     background_normal: ""
     color: (0,0,0,1)
 
@@ -150,15 +163,28 @@
     TextInput:
         size_hint_x: None
         id: txt_cant
+        background_normal: ""
+        multiline: False
+        write_tab: False
+        focus: True
     TextInput:
         id: txt_producto
         on_text: root.on_completeproduct(self)
+        background_normal: ""
+        multiline: False
+        write_tab: False
     TextInput:
         size_hint_x: None
         id: txt_precio
+        background_normal: ""
+        multiline: False
+        write_tab: False
     TextInput:
         size_hint_x: None
         id: txt_total
+        background_normal: ""
+        multiline: False
+        write_tab: False
     Button:
         id: btn_action
         size_hint_x: None
@@ -167,63 +193,147 @@
         on_press: root.addNoteItem(self)
 
 <Pos>:
+    txt_total:txt_total
+    txt_client:txt_client
+    img_button:img_button
     orientation: "vertical"
     padding: 30
+    spacing: 10
     lst_note:lst_note
-    canvas.before:            
-        Color:
-            rgba: 1, 1, 1, 1
-        Rectangle:
-            pos: self.pos
-            size: self.size 
     
-    BoxLayout:
-        size_hint_y: None
-        height: 40
-        BlackLabel:
-            text: "Cliente"
-        TextInput:
+    TabbedPanel:
+        do_default_tab: False
+        tab_pos: 'left_mid'
         
-        ImageButton:
-            source: "plus.png"
-            size_hint_x: None
-            width:40
-    
-    BoxLayout:
-        orientation: 'vertical'
-        BoxLayout:
-            size_hint_y: None
-            BlackLabel: 
-                size_hint_x: None
-                text: "Cant"
-            BlackLabel: 
-                text: "Producto"
-            BlackLabel: 
-                text: "Precio"
-                size_hint_x: None
-            BlackLabel: 
-                text: "Total"
-                size_hint_x: None
-            BlackLabel: 
-                text: "+"
-                size_hint_x: None
-                width: 40
+        canvas.before:            
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size 
+
+                
         
-        ScrollBox:
-            id: lst_note
-            orientation: "vertical"
-            NoteItem:
-        
-    BoxLayout:
-        size_hint_y: None
-        BlackLabel: 
-            text: "Total:"
+        TabbedPanelItem:
+            text: "Vender"
+            canvas.before:            
+                Color:
+                    rgba: 1, 1, 1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size 
+                    
+            BoxLayout:
             
-        Button: 
-            size_hint_x: None
-            width: 150
-            text: "ACEPTAR"
-            on_press: root.hacerNota()
+                canvas.before:            
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size 
+                    
+                orientation: "vertical"
+                BoxLayout:
+                    size_hint_y: None
+                    height: 40
+                    BlackLabel:
+                        text: "Cliente"
+                    TextInput:
+                        id: txt_client
+                        on_text: root.on_completeclient(self)
+                    
+                    ImageButton:
+                        source: "plus.png"
+                        size_hint_x: None
+                        width:40
+                        on_press: root.addClient()
+                        id: img_button
+                
+                BoxLayout:
+                    orientation: 'vertical'   
+                    padding: 10   
+                        
+                    canvas.before:            
+                        Color:
+                            rgba: 0.96, 0.96, 0.96, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size 
+                    
+                    BoxLayout:
+                        size_hint_y: None
+                        height: 40
+                        
+                        
+                        canvas.before:            
+                            Color:
+                                rgba: .8, .8, 1, 1
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size 
+                        
+                        BlackLabel: 
+                            size_hint_x: None
+                            text: "Cant"
+                        BlackLabel: 
+                            text: "Producto"
+                        BlackLabel: 
+                            text: "Precio"
+                            size_hint_x: None
+                        BlackLabel: 
+                            text: "Total"
+                            size_hint_x: None
+                        BlackLabel: 
+                            text: "+"
+                            size_hint_x: None
+                            width: 40
+                    
+                    ScrollBox:
+                        id: lst_note
+                        orientation: "vertical"
+                        
+                        canvas.before:            
+                            Color:
+                                rgba: 1, 1, 1, 1
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size 
+                                
+                        NoteItem:
+                    
+                BoxLayout:
+                    size_hint_y: None
+                    BlackLabel: 
+                        text: "Total:"
+                        font_size: 40
+                        size_hint_x: None
+                        width: 150
+                    BlackLabel: 
+                        font_size: 40
+                        id: txt_total
+                        color: (.1,.1,.1,1)
+                        text: "0"
+                        size_hint_x: None
+
+                    AnchorLayout:
+                        anchor_x: "right"
+
+                        Button: 
+                            size_hint_x: None
+                            width: 150
+                            text: "ACEPTAR"
+                            on_press: root.hacerNota()
+                        
+        TabbedPanelItem:
+            text: "Notas"
+            
+            BoxLayout:
+                canvas.before:            
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size 
 
 <TaskMenu>:
     size_hint: (None,None)
@@ -351,44 +461,9 @@
             size_hint_x: None
             width: 600
 
-<Login@AnchorLayout>:
-    anchor_x: "center"
-    anchor_y: "center"
-    txt_email:txt_email
-    txt_password:txt_password
-    BoxLayout:
-        size_hint: (None, None)
-        size: (400,300)
-        orientation: "vertical"
-        spacing: 20
-        Label:
-            text: "Email"
-            size_hint_y: None
-            height: 30
-        TextInput:
-            id: txt_email
-            multiline: False
-            write_tab: False
-            on_text_validate: root.txt_password.focus = True
-            text: "devsinc@hotmail.com"
-        Label:
-            text: "Contraseña"
-            size_hint_y: None
-            height: 30
-            
-        TextInput:
-            id: txt_password
-            password: True
-            multiline: False
-            write_tab: False
-            on_text_validate: app.root.do_login(root)
-            text: "seisdevs_2010"
-            
-        Button:
-            text: "Login"
-            on_press: app.root.do_login(root)
-            
+
 <Main>:
+    txt_username:txt_username
     orientation: "vertical"
     battleplan: battleplan
     padding: 50
@@ -399,6 +474,15 @@
         Rectangle:
             pos: self.pos
             size: self.size 
+            
+    BoxLayout:
+        size_hint_y: None
+        height: 40
+        Label:
+            text: "Username"
+            color: (0,0,0,1)
+            id:txt_username
+            font_size: 35
             
     BoxLayout:
         size_hint_y: None
@@ -428,6 +512,43 @@
     BattlePlan:
         id: battleplan
 
+<Login@AnchorLayout>:
+    anchor_x: "center"
+    anchor_y: "center"
+    txt_email:txt_email
+    txt_password:txt_password
+    BoxLayout:
+        size_hint: (None, None)
+        size: (400,300)
+        orientation: "vertical"
+        spacing: 20
+        Label:
+            text: "Email"
+            size_hint_y: None
+            height: 30
+        TextInput:
+            id: txt_email
+            multiline: False
+            write_tab: False
+            on_text_validate: root.txt_password.focus=True
+            text: "devsinc@hotmail.com"
+        Label:
+            text: "Contraseña"
+            size_hint_y: None
+            height: 30
+            
+        TextInput:
+            id: txt_password
+            password: True
+            multiline: False
+            write_tab: False
+            on_text_validate: app.root.do_login(root)
+            text: "seisdevs_2010"
+            
+        Button:
+            text: "Login"
+            on_press: app.root.do_login(root)
+            
 
 <DevsHub>:
     Login:
