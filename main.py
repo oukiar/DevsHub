@@ -3,6 +3,9 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
+from kivy.uix.dropdown import DropDown
+from kivy.uix.button import Button
+
 from kivy.properties import ObjectProperty, StringProperty
 
 from datepicker import DatePicker
@@ -28,10 +31,19 @@ class Clientes(BoxLayout):
     pass
 
 class Pos(BoxLayout):
+    def hacerNota(self):
+        print "Realizando nota"
+        
+
+class WhiteButton(Button):
     pass
 
-
 class NoteItem(BoxLayout):
+    
+    def __init__(self, **kwargs):
+        super(NoteItem, self).__init__(**kwargs)
+        self.dropdown = DropDown()
+    
     def addNoteItem(self, w):
         '''
         inventoryitem = Inventarios()
@@ -54,8 +66,25 @@ class NoteItem(BoxLayout):
     def on_completeproduct(self, w):
         print w.text
         if len(w.text) > 2:
-            print "Searching: " + w.text
-
+            
+            self.dropdown.clear_widgets()
+            
+            for item in devshub.root.inventario:
+                if w.text.upper() in item.Producto.upper():
+                    but = WhiteButton(text=item.Producto, size_hint_y=None, height=40)
+                    but.bind(on_press=self.fillProduct)
+                    but.Item = item
+                    self.dropdown.add_widget(but)
+                    
+            self.dropdown.open(w)
+            
+    def fillProduct(self, w):
+        
+        self.dropdown.dismiss()
+        self.txt_producto.text = w.text
+        self.txt_precio.text = w.Item.Precio
+        if self.txt_cant.text != "":
+            self.txt_total.text = str(float(self.txt_cant.text) * float(self.txt_precio.text))
 
 class InventoryItem(BoxLayout):
 
@@ -67,6 +96,8 @@ class InventoryItem(BoxLayout):
         inventoryitem.Minimo = w.parent.txt_minimo.text
         inventoryitem.Maximo = w.parent.txt_maximo.text
         inventoryitem.Precio = w.parent.txt_precio.text
+        inventoryitem.PUser = devshub.root.user
+        
         inventoryitem.save()
 
         newitem = InventoryItem()
@@ -269,6 +300,8 @@ class DevsHub(FloatLayout):
         self.main = Main()
         self.main.battleplan.updateList()
         self.add_widget(self.main)
+        
+        self.inventario = Inventarios.Query.filter(PUser__in=[self.user])
 
 if __name__ == "__main__":
     
