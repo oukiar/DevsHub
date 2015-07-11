@@ -152,6 +152,33 @@
     background_normal: ""
     color: (0,0,0,1)
 
+
+
+<Ticket>:
+    txt_fecha:txt_fecha
+    txt_cliente:txt_cliente
+    txt_total:txt_total
+    
+    size_hint_y: None
+    height: 40
+    TextInput:
+        size_hint_x: None
+        id: txt_fecha
+        background_normal: ""
+        multiline: False
+        write_tab: False
+    TextInput:
+        id: txt_cliente
+        background_normal: ""
+        multiline: False
+        write_tab: False
+    TextInput:
+        size_hint_x: None
+        id: txt_total
+        background_normal: ""
+        multiline: False
+        write_tab: False
+
 <NoteItem>:
     txt_cant:txt_cant
     txt_producto:txt_producto
@@ -167,6 +194,7 @@
         multiline: False
         write_tab: False
         focus: True
+        text: "1"
     TextInput:
         id: txt_producto
         on_text: root.on_completeproduct(self)
@@ -328,12 +356,45 @@
             text: "Notas"
             
             BoxLayout:
+                orientation: "vertical"
                 canvas.before:            
                     Color:
                         rgba: 1, 1, 1, 1
                     Rectangle:
                         pos: self.pos
                         size: self.size 
+                        
+                Label:
+                    text: "Historial de ventas"
+                    size_hint_y: None
+                    color: (0,0,0,1)
+                    font_size: 32
+                    
+                BoxLayout:
+                    size_hint_y: None
+                    height: 40
+                    
+                    
+                    canvas.before:            
+                        Color:
+                            rgba: .8, .8, 1, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size 
+                    
+                    BlackLabel: 
+                        size_hint_x: None
+                        text: "Fecha"
+                    BlackLabel: 
+                        text: "Cliente"
+                    BlackLabel: 
+                        text: "Total"
+                        size_hint_x: None
+                        
+                ScrollBox:
+                    orientation: "vertical"
+                    Ticket:
+                    
 
 <TaskMenu>:
     size_hint: (None,None)
@@ -509,6 +570,10 @@
         Button:
             text: "Clientes"
             on_press: root.show_clientes()
+        Button:
+            text: "Garantias"
+            on_press: root.show_garantias()
+            
     BattlePlan:
         id: battleplan
 

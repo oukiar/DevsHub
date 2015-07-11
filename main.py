@@ -28,6 +28,8 @@ Notas = Object.factory("Notas")
 class AddClient(BoxLayout):
     pass
 
+class Ticket(BoxLayout):
+    pass
 
 class Pos(BoxLayout):
     def hacerNota(self):
@@ -120,7 +122,7 @@ class NoteItem(BoxLayout):
         newitem = NoteItem()
         w.text = "X"
         
-        table = self.parent.parent.parent.parent.lst_note
+        table = devshub.root.main.ventas.lst_note
         
         table.add_widget(newitem, index=len(table.layout.children))
         
