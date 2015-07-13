@@ -10,6 +10,8 @@ from kivy.properties import ObjectProperty, StringProperty
 
 from datepicker import DatePicker
 
+from orgboat import Orgboat
+
 #parse stuff
 from parse_rest.connection import register, ParseBatcher
 from parse_rest.datatypes import Object
@@ -175,95 +177,6 @@ class InventoryItem(BoxLayout):
 class Inventory(BoxLayout):
     lst_inventory = ObjectProperty()
 
-class TaskMenu(Popup):
-    
-    taskItem = ObjectProperty()
-    
-    def selfDelete(self):
-        print self.taskItem.taskID
-                
-        #delete from the database
-        tarea = Tareas.Query.get(objectId=self.taskItem.taskID)
-        tarea.delete()
-        
-        
-        #update gui
-        self.taskItem.parent.parent.parent.parent.updateList()
-        
-        #close this dialog
-        self.dismiss()
-        
-    def selfSave(self):
-        
-        tarea = Tareas.Query.get(objectId=self.taskItem.taskID)
-        tarea.Task = self.txt_tarea.text
-        tarea.Status = self.lst_status.text
-        tarea.save()
-        
-        self.taskItem.parent.parent.parent.parent.updateList()
-        
-        self.dismiss()
-
-class BattlePlanItem(BoxLayout):
-    taskID = StringProperty()
-    
-    def open_menu(self):
-        tm = TaskMenu(taskItem=self)
-        tm.txt_tarea.text = self.tasktext.text
-        
-        #obtener tarea
-        tarea = Tareas.Query.get(objectId=self.taskID)
-        #inicializar valores en GUI
-        tm.lst_status.text = tarea.Status
-        
-        tm.open()
-    
-class BattlePlan(BoxLayout):
-    tasks = ObjectProperty()
-    tasktext = ObjectProperty()
-    
-    def __init__(self, **kwargs):
-        super(BattlePlan, self).__init__(**kwargs)
-        #self.updateList()
-    
-    def addTask(self):
-        tarea = Tareas()
-        tarea.Task = self.tasktext.text
-        tarea.Status = "Pending"
-        tarea.PUser = devshub.root.user
-        tarea.save()
-        
-        
-        taskitem = BattlePlanItem()
-        taskitem.tasktext.text = self.tasktext.text
-        taskitem.taskID = tarea.objectId
-        self.tasks.add_widget(taskitem, index=len(self.tasks.layout.children))
-
-        #clean controls
-        self.tasktext.text = ""
-        #self.tasktext.focus = True
-        
-    def updateList(self):
-        tareas = Tareas.Query.filter(PUser__in=[devshub.root.user]).order_by("-createdAt")
-
-        self.tasks.clear()
-
-        for tarea in tareas:
-            taskitem = BattlePlanItem()
-            taskitem.tasktext.text = tarea.Task
-            taskitem.taskID = tarea.objectId
-            
-            if tarea.Status == "Pending":
-                taskitem.img_menu.source = "menu_pending.png"
-            elif tarea.Status == "In progress":
-                taskitem.img_menu.source = "menu_inprogress.png"
-            elif tarea.Status == "Done":
-                taskitem.img_menu.source = "menu_done.png"
-            elif tarea.Status == "Expired":
-                taskitem.img_menu.source = "menu_expired.png"
-            
-            self.tasks.add_widget(taskitem)
-
 class Main(BoxLayout):
     
     battleplan = ObjectProperty()
@@ -326,9 +239,9 @@ class Main(BoxLayout):
         else:
             self.remove_widget(self.battleplan)
             
-        self.inventario = Inventory()
-        self.add_widget(self.inventario)
-        self.section = self.inventario
+        self.orgboat = Orgboat()
+        self.add_widget(self.orgboat)
+        self.section = self.orgboat
         
     def show_clientes(self):        
         if hasattr(self, "section"):

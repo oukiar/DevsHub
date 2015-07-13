@@ -36,16 +36,16 @@
 	size_hint_y: None
 	height: 70
 	Button: 
-		text: "Profile"
+		text: "Receipts"
 		on_press: app.root.changeTab(app.root.profile)
 	Button: 
-		text: "Battle plans"
+		text: "New receipt"
 		on_press: app.root.changeTab(app.root.battleplan)
 	Button: 
-		text: "Reports"
+		text: "Warehouse"
 		on_press: app.root.changeTab(app.root.reports)
 	Button: 
-		text: "Commendations"
+		text: "New warehouse"
 		on_press: app.root.changeTab(app.root.commendations)
 	Button: 
 		text: "Stats"
@@ -396,7 +396,7 @@
 				pos: self.pos
 				size: self.size 
 		Label:
-			text: "Demolition"
+			text: "LCCargo Xpress"
 		ImageButton:
 			source: "menu.png"
 	BoxLayout:
@@ -466,7 +466,7 @@
 			size_hint_x: None
 			width: 40
 		Label: 
-			text: "DIVISION"
+			text: "Warehouse"
 			font_size: 16
 			text_size: self.size
 			halign: 'left'
@@ -493,7 +493,7 @@
 			size_hint_x: None
 			width: 40
 		Label: 
-			text: "STAFF"
+			text: "In transit"
 			font_size: 16
 			text_size: self.size
 			halign: 'left'
@@ -510,6 +510,53 @@
 			StaffItem:
 			StaffItem:
 
+	BoxLayout:
+		size_hint_y: None
+		spacing: 5
+		padding: 5
+		height: 50
+		
+		canvas.before:            
+			Color:
+				rgba: .3, .3, .3, 1
+			Rectangle:
+				pos: self.pos
+				size: self.size 
+
+		Image:
+			source: "staff.png"
+			size_hint_x: None
+			width: 40
+		Label: 
+			text: "Land"
+			font_size: 16
+			text_size: self.size
+			halign: 'left'
+			valign: 'middle'
+			
+		BoxLayout:
+		size_hint_y: None
+		spacing: 5
+		padding: 5
+		height: 50
+		
+		canvas.before:            
+			Color:
+				rgba: .3, .3, .3, 1
+			Rectangle:
+				pos: self.pos
+				size: self.size 
+
+		Image:
+			source: "staff.png"
+			size_hint_x: None
+			width: 40
+		Label: 
+			text: "Ocean"
+			font_size: 16
+			text_size: self.size
+			halign: 'left'
+			valign: 'middle'
 
 	BoxLayout:
 		size_hint_y: None
@@ -529,7 +576,7 @@
 			size_hint_x: None
 			width: 40
 		Label: 
-			text: "RECENT MESSAGES"
+			text: "Air"
 			font_size: 16
 			text_size: self.size
 			halign: 'left'

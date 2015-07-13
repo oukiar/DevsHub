@@ -1,7 +1,7 @@
 #:import ScrollBox devslib.scrollbox
 #:import ImageButton devslib.utils
 #:import DatePicker datepicker
-
+#:include orgboat.kv
 <Clientes>:
 
 <InventoryItem>:
@@ -395,132 +395,6 @@
                     orientation: "vertical"
                     Ticket:
                     
-
-<TaskMenu>:
-    size_hint: (None,None)
-    size:(700,550)
-    title: "Detalles de tarea"
-    txt_tarea:txt_tarea
-    lst_status:lst_status
-    BoxLayout:
-        spacing: 10
-        orientation: "vertical"
-        BoxLayout:
-            size_hint_y: None
-            height: 40
-            Label:
-                text: "Editar tarea"
-            TextInput:
-                multiline: False
-                write_tab: False
-                id: txt_tarea
-                
-        BoxLayout:
-            size_hint_y: None
-            height: 40
-            Label:
-                text: "Status:"
-            Spinner:
-                values: ("Pending", "In progress", "Done")
-                id: lst_status
-                
-        BoxLayout:
-            size_hint_y: None
-            height: 40
-            Label:
-                text: "Clase:"
-            ImageButton:
-                source: "plus.png"
-                size_hint_x: None
-                width:40
-            Spinner:
-                values: ("Privado", "Publico")
-                text: "Privado"
-                
-        BoxLayout:
-            padding: 5
-            orientation: "vertical"
-            Label:
-                text: "Fecha limite"
-                size_hint_y: None
-                height: 40
-            DatePicker:
-        
-        Button:
-            text: "Guardar"
-            size_hint_y: None
-            height: 50
-            on_press: root.selfSave()
-            
-        Button:
-            text: "Eliminar"
-            size_hint_y: None
-            height: 50
-            on_press: root.selfDelete()
-
-<BattlePlanItem@BoxLayout>:
-    tasktext:tasktext
-    img_menu:img_menu
-    size_hint_y: None
-    height: 40
-    ImageButton:
-        id: img_menu
-        source: "menu_pending.png"
-        size_hint_x: None
-        width: 32
-        on_press: root.open_menu()
-    Label:
-        id: tasktext
-        color: (0,0,0,1)
-        text_size: self.width, None
-        size: self.texture_size
-        
-<BattlePlan>:
-    orientation: "vertical"
-    padding:20
-    spacing:20
-    tasks:tasks
-    tasktext:tasktext
-    
-    canvas.before:            
-        Color:
-            rgba: 1, 1, 1, 1
-        Rectangle:
-            pos: self.pos
-            size: self.size 
-    
-    Label:
-        font_size: 45
-        text: "Plan de batalla"
-        color:(0,0,0,1)
-        size_hint_y: None
-        height: 100
-    AnchorLayout:
-        size_hint_y: None
-        height: 40
-        anchor_x: "center"
-        anchor_y: "top"
-        BoxLayout:
-            TextInput:
-                size_hint_x: .8
-                multiline: False
-                id: tasktext
-                on_text_validate: root.addTask()
-                
-            ImageButton:
-                source: "update.png"
-                size_hint_x: None
-                width: 50
-        
-    AnchorLayout:
-        anchor_x: "center"
-        anchor_y: "top"
-
-        ScrollBox:
-            id: tasks
-            orientation: "vertical"
-            size_hint_x: None
-            width: 600
 
 
 <Main>:
