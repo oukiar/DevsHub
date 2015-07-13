@@ -48,51 +48,13 @@ class BattlePlanItem(BoxLayout):
         
         tm.open()
     
-class BattlePlan(BoxLayout):
+class NewReceipt(BoxLayout):
     tasks = ObjectProperty()
     tasktext = ObjectProperty()
     
     def __init__(self, **kwargs):
-        super(BattlePlan, self).__init__(**kwargs)
-        #self.updateList()
-    
-    def addTask(self):
-        tarea = Tareas()
-        tarea.Task = self.tasktext.text
-        tarea.Status = "Pending"
-        tarea.PUser = devshub.root.user
-        tarea.save()
+        super(NewReceipt, self).__init__(**kwargs)
         
-        
-        taskitem = BattlePlanItem()
-        taskitem.tasktext.text = self.tasktext.text
-        taskitem.taskID = tarea.objectId
-        self.tasks.add_widget(taskitem, index=len(self.tasks.layout.children))
-
-        #clean controls
-        self.tasktext.text = ""
-        #self.tasktext.focus = True
-        
-    def updateList(self):
-        tareas = Tareas.Query.filter(PUser__in=[devshub.root.user]).order_by("-createdAt")
-
-        self.tasks.clear()
-
-        for tarea in tareas:
-            taskitem = BattlePlanItem()
-            taskitem.tasktext.text = tarea.Task
-            taskitem.taskID = tarea.objectId
-            
-            if tarea.Status == "Pending":
-                taskitem.img_menu.source = "menu_pending.png"
-            elif tarea.Status == "In progress":
-                taskitem.img_menu.source = "menu_inprogress.png"
-            elif tarea.Status == "Done":
-                taskitem.img_menu.source = "menu_done.png"
-            elif tarea.Status == "Expired":
-                taskitem.img_menu.source = "menu_expired.png"
-            
-            self.tasks.add_widget(taskitem)
 
 class Reports(BoxLayout):
 	pass
@@ -106,18 +68,18 @@ class Stats(BoxLayout):
 class Orgboat(BoxLayout):
 	
 	menu = ObjectProperty()
-	profile = ObjectProperty()
+	receipts = ObjectProperty()
 	workSpace = ObjectProperty()
 	
 	def __init__(self, **kwargs):
 		super(Orgboat, self).__init__(**kwargs)
 		
-		self.battleplan = BattlePlan()
+		self.newreceipt = NewReceipt()
 		self.reports = Reports()
 		self.commendations = Commendations()
 		self.stats = Stats()
 		
-		self.currentTab = self.profile
+		self.currentTab = self.receipts
 		
 	def changeTab(self, tabToShow):
 		self.workSpace.remove_widget(self.currentTab)

@@ -37,10 +37,10 @@
 	height: 70
 	Button: 
 		text: "Receipts"
-		on_press: app.root.changeTab(app.root.profile)
+		on_press: app.root.changeTab(app.root.receipts)
 	Button: 
 		text: "New receipt"
-		on_press: app.root.changeTab(app.root.battleplan)
+		on_press: app.root.changeTab(app.root.newreceipt)
 	Button: 
 		text: "Warehouse"
 		on_press: app.root.changeTab(app.root.reports)
@@ -334,12 +334,10 @@
         text_size: self.width, None
         size: self.texture_size
         
-<BattlePlan>:
+<NewReceipt>:
     orientation: "vertical"
     padding:20
     spacing:20
-    tasks:tasks
-    tasktext:tasktext
     
     canvas.before:            
         Color:
@@ -348,39 +346,38 @@
             pos: self.pos
             size: self.size 
     
-    Label:
-        font_size: 45
-        text: "Plan de batalla"
-        color:(0,0,0,1)
-        size_hint_y: None
-        height: 100
-    AnchorLayout:
-        size_hint_y: None
-        height: 40
-        anchor_x: "center"
-        anchor_y: "top"
+    BoxLayout:
+        orientation: "vertical"
         BoxLayout:
+            BlackLabel:
+                text: "Receipt"
             TextInput:
-                size_hint_x: .8
-                multiline: False
-                id: tasktext
-                on_text_validate: root.addTask()
-                
-            ImageButton:
-                source: "update.png"
-                size_hint_x: None
-                width: 50
-        
-    AnchorLayout:
-        anchor_x: "center"
-        anchor_y: "top"
+            BlackLabel:
+                text: "Date"
+            TextInput:
+            BlackLabel:
+                text: "Agent"
+            TextInput:
 
-        ScrollBox:
-            id: tasks
-            orientation: "vertical"
-            size_hint_x: None
-            width: 600
+    BoxLayout:
+        BoxLayout:
+            BlackLabel:
+                text: "Receipt"
+            TextInput:
 
+
+        BoxLayout:
+            BlackLabel:
+                text: "Receipt"
+            TextInput:
+            
+    BoxLayout:
+        Spinner:
+            values: ("DHL", "USPS", "UPS")
+        Spinner:
+            values: ("Los angeles", "Miami")
+        Spinner:
+            values: ("Venezuela", "Colombia", "Argentina")
 
 <SideMenu@BoxLayout>:
 	orientation: "vertical"
@@ -503,14 +500,6 @@
 			size_hint_x: None
 		
 	BoxLayout:
-		padding: (10, 0)
-		ScrollBox:
-			orientation: "vertical"
-			StaffItem:
-			StaffItem:
-			StaffItem:
-
-	BoxLayout:
 		size_hint_y: None
 		spacing: 5
 		padding: 5
@@ -534,7 +523,7 @@
 			halign: 'left'
 			valign: 'middle'
 			
-		BoxLayout:
+    BoxLayout:
 		size_hint_y: None
 		spacing: 5
 		padding: 5
@@ -571,10 +560,6 @@
 				pos: self.pos
 				size: self.size 
 
-		Image:
-			source: "staff.png"
-			size_hint_x: None
-			width: 40
 		Label: 
 			text: "Air"
 			font_size: 16
@@ -582,26 +567,63 @@
 			halign: 'left'
 			valign: 'middle'
 		
-		
-	ScrollBox:
-		orientation: "vertical"
-		StaffItem:
-		StaffItem:
-		StaffItem:
-		StaffItem:
-		StaffItem:
-		
+    Label:
+        text: ""
 
-<Profile@ScrollBox>:
+
+<ReceiptItem@BoxLayout>:
+    size_hint_y: None
+    height: 40
+    TextInput:
+        text: "Rcpt."
+    TextInput:
+        text: "Client"
+    TextInput:
+        text: "Shipper"
+    TextInput:
+        text: "Repacked"
+    TextInput:
+        text: "Boxes"
+    TextInput:
+        text: "Date"
+    TextInput:
+        text: "Destination"
+    TextInput:
+        text: "Shipment"
+    TextInput:
+        text: "Warehouse"
+
+
+<Receipts@ScrollBox>:
 	spacing: 20
 	orientation: "vertical"
-	ProfileInformation:
-	JobDescription:
-	JobActivities:
+
+    BoxLayout:
+        size_hint_y: None
+        BlackLabel:
+            text: "Rcpt."
+        BlackLabel:
+            text: "Client"
+        BlackLabel:
+            text: "Shipper"
+        BlackLabel:
+            text: "Repacked"
+        BlackLabel:
+            text: "Boxes"
+        BlackLabel:
+            text: "Date"
+        BlackLabel:
+            text: "Destination"
+        BlackLabel:
+            text: "Shipment"
+        BlackLabel:
+            text: "Warehouse"
+            
+    ReceiptItem:
 
 <Orgboat>:
 	menu:menu
-	profile:profile
+	receipts:receipts
 	workSpace:workSpace
 	canvas.before:            
 		Color:
@@ -661,5 +683,5 @@
 				
 			ProfileMenu:
 					
-			Profile:
-				id: profile
+			Receipts:
+				id: receipts
