@@ -15,24 +15,29 @@ a wonderful file
 created with Sample_Code/makesimple.py"""
 
 
-def make_pdf_file(output_filename, np):
+def make_pdf_file(output_filename):
     title = output_filename
     c = canvas.Canvas(output_filename, pagesize=(6 * inch, 4 * inch))
     c.setStrokeColorRGB(0,0,0)
     c.setFillColorRGB(0,0,0)
+    
+    
     c.setFont("Helvetica", 12 * point)
-    for pn in range(1, np + 1):
-        v = 10 * inch
-        for subtline in (TEXT % (output_filename, pn, np)).split( '\n' ):
-            c.drawString( 1 * inch, v, subtline )
-            v -= 12 * point
+    
+    
+    for i in range(1, 5):
+        #v = 1 * inch
+        #for subtline in (TEXT % (output_filename, pn, np)).split( '\n' ):
+        #    c.drawString( 1 * inch, v, subtline )
+        #    v -= 12 * point
+                    
+        #image
+        c.drawImage("test.png", 0, 0, 6 * inch, 4 * inch)
         c.showPage()
+    
     c.save()
 
 if __name__ == "__main__":
-    nps = [None, 5, 11, 17]
-    for i, np in enumerate(nps):
-        if np:
-            filename = "simple%d.pdf" % i
-            make_pdf_file(filename, np)
-            print ("Wrote", filename)
+    
+    make_pdf_file("test.pdf")
+    print ("Wrote", "test.pdf")

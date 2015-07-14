@@ -252,8 +252,188 @@
 		CommendationItem:
 
 <Stats>:
-	BlackLabel:
-		text: "STATS"
+
+    labelBox: labelBox
+    receiptNum:receiptNum
+    
+    companyName:companyName
+    txt_receiptnum: txt_receiptnum
+    txt_destination:txt_destination
+    txt_length:txt_length
+    txt_width:txt_width
+    txt_height:txt_height
+    txt_volume:txt_volume
+    txt_weightvol:txt_weightvol
+    txt_weight:txt_weight
+    txt_shipper:txt_shipper
+    txt_zone:txt_zone
+    txt_time:txt_time
+    img_qrcode:img_qrcode
+    txt_consignee:txt_consignee
+    txt_madeby:txt_madeby
+    txt_nbox:txt_nbox
+    
+	canvas.before:            
+		Color:
+			rgba: 1, 1, 1, 1
+		Rectangle:
+			pos: self.pos
+			size: self.size 
+            
+    orientation: "vertical"
+            
+    BoxLayout:
+        size_hint_y: None
+        height: 50
+        padding: (150,10)
+        BlackLabel:
+            text: "Receipt number"
+        TextInput:
+            id: receiptNum
+            size_hint_x: None
+            width: 70
+        Button:
+            text: "Fill"
+            size_hint_x: None
+            width: 70
+            on_press: app.root.fillLabel()
+            
+        
+    BoxLayout:
+        id: labelBox
+        orientation: "vertical"
+        
+        size_hint_y: None
+        height: 380
+        
+        padding: 20
+        
+        BlackLabel:
+            id: companyName
+            size_hint_y: None
+            height: 40
+            font_size: 30
+            text: "LC CARGO XPRESS"
+            font_name: "ANASTHES.TTF"
+            
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            BlackLabel:
+                text: "# 00124123"
+                id: txt_receiptnum
+            BlackLabel:
+                text: "-"
+            BlackLabel:
+                text: "Destination"
+                id: txt_destination
+                
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            BlackLabel:
+                text: "Length"
+                font_size: 20
+            BlackLabel:
+                text: "Width"
+                font_size: 20
+            BlackLabel:
+                text: "Height"
+                font_size: 20
+            BlackLabel:
+                text: "Volume"
+                font_size: 20
+            BlackLabel:
+                text: "Weight-Vol"
+                font_size: 20
+            BlackLabel:
+                text: "Weight"
+                font_size: 20
+                
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            spacing: 10
+            TextInput:
+                id: txt_length
+            TextInput:
+                id: txt_width
+            TextInput:
+                id: txt_height
+            TextInput:
+                id: txt_volume
+            TextInput:
+                id: txt_weightvol
+            TextInput:
+                id: txt_weight
+            
+        BoxLayout:
+            BoxLayout:
+                orientation: "vertical"
+                size_hint_x: None
+                width: 200
+                BlackLabel:
+                    text: "[b]Shipper:[/b]"
+                    markup: True
+                BlackLabel:
+                    text: "Mario Salvador"
+                    id: txt_shipper
+                BoxLayout:
+                    BlackLabel:
+                        text: "[b]Zone:[/b]"
+                        markup: True
+                    BlackLabel:
+                        text: "900123-123"
+                        id: txt_zone
+                BoxLayout:
+                    BlackLabel:
+                        text: "[b]Time:[/b]"
+                        markup: True
+                    BlackLabel:
+                        text: "5/5/2015 8:38:29"
+                        id: txt_time
+                    
+            Image:
+                source: "qrcode.png"
+                id: img_qrcode
+                
+            BoxLayout:
+                orientation: "vertical"
+                BlackLabel:
+                    text: "[b]Consignee:[/b]"
+                    markup: True
+                BlackLabel:
+                    text: "Luis Angel Chavez"
+                    id: txt_consignee
+                    
+                BoxLayout:
+                    BlackLabel:
+                        text: "[b]Receipt by:[/b]"
+                        markup: True
+                    
+                    BlackLabel:
+                        text: "Maria Lopez"
+                        id: txt_madeby
+
+
+                BoxLayout:
+                    BlackLabel:
+                        text: "[b]Box:[/b]"
+                        markup: True
+                    BlackLabel:
+                        text: "12/15"
+                        id: txt_nbox
+                        
+        BlackLabel:
+            size_hint_y: None
+            height: 40
+            text: "ALL CARGO IS SUBJECT TO INSPECTION"
+                        
+    BoxLayout:
+        padding: 30
+        Button:
+            text: "Print"
+            on_press: app.root.printLabel()
 
 <TaskMenu>:
     size_hint: (None,None)
@@ -378,6 +558,17 @@
             values: ("Los angeles", "Miami")
         Spinner:
             values: ("Venezuela", "Colombia", "Argentina")
+            
+    BoxLayout:
+        BoxLayout:
+            BoxLayout:
+                orientation: "vertical"
+
+                BoxLayout:
+                    BlackLabel:
+                        text: "Pieces"
+                    TextInput:
+                        
 
 <SideMenu@BoxLayout>:
 	orientation: "vertical"
@@ -625,6 +816,7 @@
 	menu:menu
 	receipts:receipts
 	workSpace:workSpace
+    rightSide:rightSide
 	canvas.before:            
 		Color:
 			rgba: .25, .25, .3, 1
@@ -635,6 +827,8 @@
 	SideMenu:
 		id: menu
 	BoxLayout:
+        id: rightSide
+    
 		canvas.before:            
 			Color:
 				rgba: 1, 1, 1, 1
