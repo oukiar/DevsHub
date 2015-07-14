@@ -10,21 +10,18 @@ from kivy.properties import ObjectProperty, StringProperty
 
 from datepicker import DatePicker
 
-from orgboat import Orgboat
+import time
 
 #parse stuff
 from parse_rest.connection import register, ParseBatcher
 from parse_rest.datatypes import Object
 from parse_rest.user import User
 
-import time
-
 #parse initialization
 register("xIYoHZ0xgLwWIMWzQWPFtxrsZhzmpIQCFCAEJZch", "dqm0KGlhpaK9E0QoGi4dAMWmKuYokiutLegKeRPk")
      
 Clientes = Object.factory("Clientes")
 Inventarios = Object.factory("Inventarios")
-Tareas = Object.factory("Tareas")
 Notas = Object.factory("Notas")
 
 class AddClient(BoxLayout):
@@ -277,7 +274,6 @@ class DevsHub(FloatLayout):
         
         self.main = Main()
         self.main.txt_username.text = self.user.username
-        self.main.battleplan.updateList()
         self.add_widget(self.main)
         
         self.inventario = Inventarios.Query.filter(PUser__in=[self.user])
@@ -292,5 +288,5 @@ if __name__ == "__main__":
             return DevsHub()
 
     #Asi para tener un objeto global y acceder al root widget
-    devshub = DevsHubApp()
-    devshub.run()
+    app = DevsHubApp()
+    app.run()

@@ -1,7 +1,9 @@
 #:import ScrollBox devslib.scrollbox
 #:import ImageButton devslib.utils
 #:import DatePicker datepicker
+#:include login.kv
 #:include orgboat.kv
+
 <Clientes>:
 
 <InventoryItem>:
@@ -400,7 +402,6 @@
 <Main>:
     txt_username:txt_username
     orientation: "vertical"
-    battleplan: battleplan
     padding: 50
     
     canvas.before:            
@@ -447,47 +448,8 @@
         Button:
             text: "Garantias"
             on_press: root.show_garantias()
-            
-    BattlePlan:
-        id: battleplan
-
-<Login@AnchorLayout>:
-    anchor_x: "center"
-    anchor_y: "center"
-    txt_email:txt_email
-    txt_password:txt_password
-    BoxLayout:
-        size_hint: (None, None)
-        size: (400,300)
-        orientation: "vertical"
-        spacing: 20
-        Label:
-            text: "Email"
-            size_hint_y: None
-            height: 30
-        TextInput:
-            id: txt_email
-            multiline: False
-            write_tab: False
-            on_text_validate: root.txt_password.focus=True
-            text: "devsinc@hotmail.com"
-        Label:
-            text: "Contraseña"
-            size_hint_y: None
-            height: 30
-            
-        TextInput:
-            id: txt_password
-            password: True
-            multiline: False
-            write_tab: False
-            on_text_validate: app.root.do_login(root)
-            text: "seisdevs_2010"
-            
-        Button:
-            text: "Login"
-            on_press: app.root.do_login(root)
-            
+ 
+    Pos:
 
 <DevsHub>:
     Login:

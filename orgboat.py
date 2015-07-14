@@ -6,9 +6,9 @@ from kivy.properties import ObjectProperty, StringProperty
 
 
 class TaskMenu(Popup):
-    
+
     taskItem = ObjectProperty()
-    
+
     def selfDelete(self):
         print self.taskItem.taskID
                 
@@ -36,7 +36,7 @@ class TaskMenu(Popup):
 
 class BattlePlanItem(BoxLayout):
     taskID = StringProperty()
-    
+
     def open_menu(self):
         tm = TaskMenu(taskItem=self)
         tm.txt_tarea.text = self.tasktext.text
@@ -51,16 +51,16 @@ class BattlePlanItem(BoxLayout):
 class BattlePlan(BoxLayout):
     tasks = ObjectProperty()
     tasktext = ObjectProperty()
-    
+
     def __init__(self, **kwargs):
         super(BattlePlan, self).__init__(**kwargs)
         #self.updateList()
-    
+
     def addTask(self):
         tarea = Tareas()
         tarea.Task = self.tasktext.text
         tarea.Status = "Pending"
-        tarea.PUser = devshub.root.user
+        tarea.PUser = app.root.user
         tarea.save()
         
         
@@ -74,7 +74,7 @@ class BattlePlan(BoxLayout):
         #self.tasktext.focus = True
         
     def updateList(self):
-        tareas = Tareas.Query.filter(PUser__in=[devshub.root.user]).order_by("-createdAt")
+        tareas = Tareas.Query.filter(PUser__in=[app.root.user]).order_by("-createdAt")
 
         self.tasks.clear()
 
@@ -95,43 +95,58 @@ class BattlePlan(BoxLayout):
             self.tasks.add_widget(taskitem)
 
 class Reports(BoxLayout):
-	pass
+    pass
 
 class Commendations(BoxLayout):
-	pass
+    pass
 	
 class Stats(BoxLayout):
-	pass
+    pass
 
 class Orgboat(BoxLayout):
-	
-	menu = ObjectProperty()
-	profile = ObjectProperty()
-	workSpace = ObjectProperty()
-	
-	def __init__(self, **kwargs):
-		super(Orgboat, self).__init__(**kwargs)
-		
-		self.battleplan = BattlePlan()
-		self.reports = Reports()
-		self.commendations = Commendations()
-		self.stats = Stats()
-		
-		self.currentTab = self.profile
-		
-	def changeTab(self, tabToShow):
-		self.workSpace.remove_widget(self.currentTab)
-		
-		self.currentTab = tabToShow
-		self.workSpace.add_widget(self.currentTab)
-		
+
+    menu = ObjectProperty()
+    profile = ObjectProperty()
+    workSpace = ObjectProperty()
+
+    def __init__(self, **kwargs):
+        super(Orgboat, self).__init__(**kwargs)
+        
+        self.battleplan = BattlePlan()
+        self.reports = Reports()
+        self.commendations = Commendations()
+        self.stats = Stats()
+        
+        self.currentTab = self.profile
+        
+    def changeTab(self, tabToShow):
+        self.workSpace.remove_widget(self.currentTab)
+        
+        self.currentTab = tabToShow
+        self.workSpace.add_widget(self.currentTab)
+
+
+
+
+
+#parse stuff
+try:
+    Tareas = Object.factory("Tareas")
+except:
+    from parse_rest.connection import register, ParseBatcher
+    from parse_rest.datatypes import Object
+    from parse_rest.user import User
+
+    Tareas = Object.factory("Tareas")
 
 if __name__ == "__main__":
-	from kivy.app import App
-	
-	class OrgboatApp(App):
-		def build(self):
-			self.orgboat = Orgboat()
-			return self.orgboat
-		
-	OrgboatApp().run()
+
+    from kivy.app import App
+
+    class OrgboatApp(App):
+        def build(self):
+            self.orgboat = Orgboat()
+            return self.orgboat
+        
+    app = OrgboatApp()
+    app.run()
