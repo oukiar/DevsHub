@@ -12,17 +12,6 @@ from datepicker import DatePicker
 
 import time
 
-#parse stuff
-from parse_rest.connection import register, ParseBatcher
-from parse_rest.datatypes import Object
-from parse_rest.user import User
-
-#parse initialization
-register("xIYoHZ0xgLwWIMWzQWPFtxrsZhzmpIQCFCAEJZch", "dqm0KGlhpaK9E0QoGi4dAMWmKuYokiutLegKeRPk")
-     
-Clientes = Object.factory("Clientes")
-Inventarios = Object.factory("Inventarios")
-Notas = Object.factory("Notas")
 
 class AddClient(BoxLayout):
     pass
@@ -34,7 +23,7 @@ class Pos(BoxLayout):
     def hacerNota(self):
         print "Realizando nota"
         nota = Notas()
-        nota.PUser = devshub.root.user
+        nota.PUser = app.root.user
         nota.Total = self.txt_total.text
         
         products = []
@@ -53,6 +42,12 @@ class Pos(BoxLayout):
         
         nota.save()
         
+        #limpiar controles de nota
+        self.lst_note.clear()
+        self.lst_note.add_widget(NoteItem() )
+        self.txt_client.text = ""
+        self.txt_total.text = "0"
+        self.img_button.source = "plus.png"
         
     def on_completeclient(self, w):
         
@@ -65,7 +60,7 @@ class Pos(BoxLayout):
             
             found = False
             
-            for item in devshub.root.clientes:
+            for item in app.root.clientes:
                 if w.text.upper() in item.Name.upper():
                     but = WhiteButton(text=item.Name, size_hint_y=None, height=40)
                     but.bind(on_press=self.fillClient)
@@ -92,7 +87,7 @@ class Pos(BoxLayout):
         
         self.cliente = Clientes()
         self.cliente.Name = self.txt_client.text
-        self.cliente.PUser = devshub.root.user
+        self.cliente.PUser = app.root.user
         self.cliente.save()
         
         self.img_button.source = "ok.png"
@@ -121,11 +116,11 @@ class NoteItem(BoxLayout):
         newitem = NoteItem()
         w.text = "X"
         
-        table = devshub.root.main.ventas.lst_note
+        table = app.root.ventas.lst_note
         
         table.add_widget(newitem, index=len(table.layout.children))
         
-        devshub.root.main.ventas.txt_total.text = str(float(devshub.root.main.ventas.txt_total.text) + float(w.parent.txt_total.text))
+        app.root.ventas.txt_total.text = str(float(app.root.ventas.txt_total.text) + float(w.parent.txt_total.text))
 
     def on_completeproduct(self, w):
         print w.text
@@ -133,7 +128,7 @@ class NoteItem(BoxLayout):
             
             self.dropdown.clear_widgets()
             
-            for item in devshub.root.inventario:
+            for item in app.root.inventarios:
                 if w.text.upper() in item.Producto.upper():
                     but = WhiteButton(text=item.Producto, size_hint_y=None, height=40)
                     but.bind(on_press=self.fillProduct)
@@ -160,7 +155,7 @@ class InventoryItem(BoxLayout):
         inventoryitem.Minimo = w.parent.txt_minimo.text
         inventoryitem.Maximo = w.parent.txt_maximo.text
         inventoryitem.Precio = w.parent.txt_precio.text
-        inventoryitem.PUser = devshub.root.user
+        inventoryitem.PUser = app.root.user
         
         inventoryitem.save()
 
@@ -178,77 +173,6 @@ class Main(BoxLayout):
     
     battleplan = ObjectProperty()
     
-    def show_battleplan(self):
-        
-        if hasattr(self, "section"):
-            self.remove_widget(self.section)
-        else:
-            self.remove_widget(self.battleplan)
-            
-        self.add_widget(self.battleplan)
-        self.section = self.battleplan
-        
-    def show_ventas(self):
-        print "Section ventas"
-        
-        if hasattr(self, "section"):
-            self.remove_widget(self.section)
-        else:
-            self.remove_widget(self.battleplan)
-            
-        self.ventas = Pos()
-        self.add_widget(self.ventas)
-        self.section = self.ventas
-    
-    def show_inventario(self):        
-        if hasattr(self, "section"):
-            self.remove_widget(self.section)
-        else:
-            self.remove_widget(self.battleplan)
-            
-        self.inventario = Inventory()
-        self.add_widget(self.inventario)
-        self.section = self.inventario
-        
-    def show_servicios(self):        
-        if hasattr(self, "section"):
-            self.remove_widget(self.section)
-        else:
-            self.remove_widget(self.battleplan)
-            
-        self.inventario = Inventory()
-        self.add_widget(self.inventario)
-        self.section = self.inventario
-        
-    def show_rentas(self):        
-        if hasattr(self, "section"):
-            self.remove_widget(self.section)
-        else:
-            self.remove_widget(self.battleplan)
-            
-        self.inventario = Inventory()
-        self.add_widget(self.inventario)
-        self.section = self.inventario
-        
-    def show_organizacion(self):        
-        if hasattr(self, "section"):
-            self.remove_widget(self.section)
-        else:
-            self.remove_widget(self.battleplan)
-            
-        self.orgboat = Orgboat()
-        self.add_widget(self.orgboat)
-        self.section = self.orgboat
-        
-    def show_clientes(self):        
-        if hasattr(self, "section"):
-            self.remove_widget(self.section)
-        else:
-            self.remove_widget(self.battleplan)
-            
-        self.addclient = AddClient()
-        self.add_widget(self.addclient)
-        self.section = self.addclient
 
 class DevsHub(FloatLayout):
 
@@ -261,6 +185,12 @@ class DevsHub(FloatLayout):
         cliente.IFE = w.parent.txt_ife.text
         cliente.Monedero = w.parent.txt_monedero.text
         cliente.save()
+        
+    def changeTab(self, tabToShow):
+        self.main.workSpace.remove_widget(self.currentTab)
+        
+        self.currentTab = tabToShow
+        self.main.workSpace.add_widget(self.currentTab)
 
     def do_login(self, login):
         print login
@@ -276,8 +206,32 @@ class DevsHub(FloatLayout):
         self.main.txt_username.text = self.user.username
         self.add_widget(self.main)
         
-        self.inventario = Inventarios.Query.filter(PUser__in=[self.user])
+        self.inventarios = Inventarios.Query.filter(PUser__in=[self.user])
         self.clientes = Clientes.Query.filter(PUser__in=[self.user])
+
+        #
+        self.ventas = Pos()
+        self.inventario = Inventory()
+        self.addclient = AddClient()
+        
+        self.currentTab = self.ventas
+
+#parse stuff
+try:
+    Clientes = Object.factory("Clientes")
+    Inventarios = Object.factory("Inventarios")
+    Notas = Object.factory("Notas")
+except:
+    from parse_rest.connection import register, ParseBatcher
+    from parse_rest.datatypes import Object
+    from parse_rest.user import User
+
+    #parse initialization
+    register("xIYoHZ0xgLwWIMWzQWPFtxrsZhzmpIQCFCAEJZch", "dqm0KGlhpaK9E0QoGi4dAMWmKuYokiutLegKeRPk")
+         
+    Clientes = Object.factory("Clientes")
+    Inventarios = Object.factory("Inventarios")
+    Notas = Object.factory("Notas")
 
 if __name__ == "__main__":
     

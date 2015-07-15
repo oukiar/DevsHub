@@ -4,6 +4,10 @@ from kivy.uix.popup import Popup
 
 from kivy.properties import ObjectProperty, StringProperty
 
+from datepicker import DatePicker
+
+from devslib.scrollbox import ScrollBox
+
 
 class TaskMenu(Popup):
 
@@ -47,6 +51,7 @@ class BattlePlanItem(BoxLayout):
         tm.lst_status.text = tarea.Status
         
         tm.open()
+  
     
 class BattlePlan(BoxLayout):
     tasks = ObjectProperty()
@@ -103,31 +108,54 @@ class Commendations(BoxLayout):
 class Stats(BoxLayout):
     pass
 
+class Main(BoxLayout):
+    pass
+    
+
 class Orgboat(BoxLayout):
 
     menu = ObjectProperty()
     profile = ObjectProperty()
     workSpace = ObjectProperty()
 
-    def __init__(self, **kwargs):
-        super(Orgboat, self).__init__(**kwargs)
+        
+    def changeTab(self, tabToShow):
+        self.main.workSpace.remove_widget(self.currentTab)
+        
+        self.currentTab = tabToShow
+        self.main.workSpace.add_widget(self.currentTab)
+
+    def do_login(self, login):
+        print login
+        
+        try:
+            self.user = User.login(login.txt_email.text, login.txt_password.text)
+        except:
+            self.user = User.signup(login.txt_email.text, login.txt_password.text)
+        
+        self.remove_widget(login)
+        
+        self.main = Main()
+        self.main.txt_information.text = self.user.username
+        self.add_widget(self.main)
+
+        #create the sections of the user interface
         
         self.battleplan = BattlePlan()
         self.reports = Reports()
         self.commendations = Commendations()
         self.stats = Stats()
         
-        self.currentTab = self.profile
+        self.profile = self.main.profile
         
-    def changeTab(self, tabToShow):
-        self.workSpace.remove_widget(self.currentTab)
+        #add profile section as visible
+        #self.main.workSpace.add_widget(self.profile)
         
-        self.currentTab = tabToShow
-        self.workSpace.add_widget(self.currentTab)
-
-
-
-
+        #save the active section for successfull section change
+        self.currentTab = self.main.profile
+        
+        #inicializar interfaz de usuario
+        self.battleplan.updateList()
 
 #parse stuff
 try:
@@ -137,7 +165,12 @@ except:
     from parse_rest.datatypes import Object
     from parse_rest.user import User
 
+    #parse initialization
+    register("hwKXR17rbtIP6ER9QL5AvQ5IM7ll17b1Iy3x4uTf", "1TifCFsTXIpUqlcZ0frTyCDHqW5HrCGtW10kqtpS")
+
     Tareas = Object.factory("Tareas")
+    
+    
 
 if __name__ == "__main__":
 
@@ -147,6 +180,7 @@ if __name__ == "__main__":
         def build(self):
             self.orgboat = Orgboat()
             return self.orgboat
+            #return MyProfile()
         
     app = OrgboatApp()
     app.run()

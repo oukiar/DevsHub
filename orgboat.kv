@@ -1,6 +1,7 @@
 
 #:import ImageButton devslib.utils
-#:import ScrollBox devslib.scrollbox
+
+#:include login.kv
 
 <BlackLabel@Label>:
     color: (0,0,0,1)
@@ -32,7 +33,7 @@
 		size_hint_x: None
 		width: 20
 
-<ProfileMenu@BoxLayout>:
+<MainMenu@BoxLayout>:
 	size_hint_y: None
 	height: 70
 	Button: 
@@ -317,70 +318,6 @@
             height: 50
             on_press: root.selfDelete()
 
-<BattlePlanItem@BoxLayout>:
-    tasktext:tasktext
-    img_menu:img_menu
-    size_hint_y: None
-    height: 40
-    ImageButton:
-        id: img_menu
-        source: "menu_pending.png"
-        size_hint_x: None
-        width: 32
-        on_press: root.open_menu()
-    Label:
-        id: tasktext
-        color: (0,0,0,1)
-        text_size: self.width, None
-        size: self.texture_size
-        
-<BattlePlan>:
-    orientation: "vertical"
-    padding:20
-    spacing:20
-    tasks:tasks
-    tasktext:tasktext
-    
-    canvas.before:            
-        Color:
-            rgba: 1, 1, 1, 1
-        Rectangle:
-            pos: self.pos
-            size: self.size 
-    
-    Label:
-        font_size: 45
-        text: "Plan de batalla"
-        color:(0,0,0,1)
-        size_hint_y: None
-        height: 100
-    AnchorLayout:
-        size_hint_y: None
-        height: 40
-        anchor_x: "center"
-        anchor_y: "top"
-        BoxLayout:
-            TextInput:
-                size_hint_x: .8
-                multiline: False
-                id: tasktext
-                on_text_validate: root.addTask()
-                
-            ImageButton:
-                source: "update.png"
-                size_hint_x: None
-                width: 50
-        
-    AnchorLayout:
-        anchor_x: "center"
-        anchor_y: "top"
-
-        ScrollBox:
-            id: tasks
-            orientation: "vertical"
-            size_hint_x: None
-            width: 600
-
 
 <SideMenu@BoxLayout>:
 	orientation: "vertical"
@@ -548,14 +485,18 @@
 <Profile@ScrollBox>:
 	spacing: 20
 	orientation: "vertical"
+    
 	ProfileInformation:
 	JobDescription:
 	JobActivities:
 
-<Orgboat>:
+<Main>:
+
 	menu:menu
-	profile:profile
 	workSpace:workSpace
+    txt_information:txt_information
+    profile:profile
+    
 	canvas.before:            
 		Color:
 			rgba: .25, .25, .3, 1
@@ -579,6 +520,7 @@
 			
 			BlackLabel: 
 				text: "Information"
+                id: txt_information
 			ImageButton:
 				source: "star.png"
 				size_hint_x: None
@@ -612,7 +554,10 @@
 				color: (0,0,0,1)
 				text: "Erica monroy"
 				
-			ProfileMenu:
-					
-			Profile:
-				id: profile
+			MainMenu:
+            
+            Profile:
+                id: profile
+
+<Orgboat>:
+    Login:

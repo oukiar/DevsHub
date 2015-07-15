@@ -2,7 +2,6 @@
 #:import ImageButton devslib.utils
 #:import DatePicker datepicker
 #:include login.kv
-#:include orgboat.kv
 
 <Clientes>:
 
@@ -398,9 +397,22 @@
                     Ticket:
                     
 
+<MainMenu@BoxLayout>:
+	size_hint_y: None
+	height: 60
+	Button: 
+		text: "Ventas"
+		on_press: app.root.changeTab(app.root.ventas)
+	Button: 
+		text: "Inventario"
+		on_press: app.root.changeTab(app.root.inventario)
+	Button: 
+		text: "Clientes"
+		on_press: app.root.changeTab(app.root.addclient)
 
 <Main>:
     txt_username:txt_username
+    workSpace:workSpace
     orientation: "vertical"
     padding: 50
     
@@ -420,36 +432,11 @@
             id:txt_username
             font_size: 35
             
+    MainMenu:
+    
     BoxLayout:
-        size_hint_y: None
-        height: 40
-        Button:
-            text: "BattlePlan"
-            background_color: (0,0,0,1)
-            on_press: root.show_battleplan()
-        Button:
-            text: "Ventas"
-            on_press: root.show_ventas()
-        Button:
-            text: "Inventario"
-            on_press: root.show_inventario()
-        Button:
-            text: "Servicios"
-            on_press: root.show_servicios()
-        Button:
-            text: "Rentas"
-            on_press: root.show_rentas()
-        Button:
-            text: "Organizacion"
-            on_press: root.show_organizacion()
-        Button:
-            text: "Clientes"
-            on_press: root.show_clientes()
-        Button:
-            text: "Garantias"
-            on_press: root.show_garantias()
+        id: workSpace
  
-    Pos:
 
 <DevsHub>:
     Login:
