@@ -20,12 +20,16 @@ class AddClient(BoxLayout):
 class Ticket(BoxLayout):
     pass
 
+class NoteReg(BoxLayout):
+    pass
+
 class Pos(BoxLayout):
     def hacerNota(self):
         print "Realizando nota"
         nota = Notas()
         nota.PUser = app.root.user
         nota.Total = self.txt_total.text
+        nota.Cliente = self.cliente
         
         products = []
         
@@ -76,12 +80,13 @@ class Pos(BoxLayout):
                 
     def fillClient(self, w):
         
-        self.dropdown.dismiss()
         self.txt_client.text = w.text
         
         self.img_button.source = "ok.png"
         
         self.cliente = w.Cliente
+        
+        self.dropdown.dismiss()
         
     def addClient(self):
         print "Adding the client: " + self.txt_client.text
@@ -92,6 +97,18 @@ class Pos(BoxLayout):
         self.cliente.save()
         
         self.img_button.source = "ok.png"
+        
+    def fillNotas(self):
+        print "Llenado lista de notas"
+        
+        for i in app.root.notas:
+            print i
+            notareg = NoteReg()
+            notareg.txt_fecha.text = str(i.createdAt)
+            notareg.txt_cliente.text = i.Cliente.Name
+            notareg.txt_total.text = str(i.Total)
+            
+            self.lst_notas.add_widget(notareg)
 
 class WhiteButton(Button):
     pass
@@ -209,10 +226,14 @@ class DevsHub(FloatLayout):
         
         self.inventarios = Inventarios.Query.filter(PUser__in=[self.user])
         self.clientes = Clientes.Query.filter(PUser__in=[self.user])
+        self.notas = Notas.Query.filter(PUser__in=[self.user])
 
         #
         self.ventas = Pos()
+        self.ventas.fillNotas()
+        
         self.inventario = Inventory()
+        
         self.addclient = AddClient()
         
         self.currentTab = self.ventas

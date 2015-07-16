@@ -153,7 +153,20 @@
     background_normal: ""
     color: (0,0,0,1)
 
-
+<TextBoxNote@TextInput>:
+    background_normal: ""
+    multiline: False
+    write_tab: False
+    
+    canvas.after:          
+        Color:
+            rgba: 0, 0, 0, 1
+        Line:
+            points: [self.pos[0]+self.width-10, self.pos[1]+2, self.pos[0]+self.width, self.pos[1]+2]
+            width: 1
+        Line:
+            points: [self.pos[0]+self.width, self.pos[1], self.pos[0]+self.width, self.pos[1]+10]
+            width: 1
 
 <Ticket>:
     txt_fecha:txt_fecha
@@ -188,38 +201,43 @@
     btn_action:btn_action
     size_hint_y: None
     height: 40
-    TextInput:
+    TextBoxNote:
         size_hint_x: None
         id: txt_cant
-        background_normal: ""
-        multiline: False
-        write_tab: False
-        focus: True
         text: "1"
-    TextInput:
+    TextBoxNote:
         id: txt_producto
         on_text: root.on_completeproduct(self)
-        background_normal: ""
-        multiline: False
-        write_tab: False
-    TextInput:
+    TextBoxNote:
         size_hint_x: None
         id: txt_precio
-        background_normal: ""
-        multiline: False
-        write_tab: False
-    TextInput:
+    TextBoxNote:
         size_hint_x: None
         id: txt_total
-        background_normal: ""
-        multiline: False
-        write_tab: False
     Button:
         id: btn_action
         size_hint_x: None
         text: "+"
         width: 40
         on_press: root.addNoteItem(self)
+
+<NoteReg>:
+    txt_fecha:txt_fecha
+    txt_cliente:txt_cliente
+    txt_total:txt_total
+    
+    
+    size_hint_y: None
+    height: 40
+    BlackLabel:
+        size_hint_x: None
+        id: txt_fecha
+        text: "17/02/2015"
+    BlackLabel:
+        id: txt_cliente
+    BlackLabel:
+        size_hint_x: None
+        id: txt_total
 
 <Pos>:
     txt_total:txt_total
@@ -229,6 +247,8 @@
     padding: 30
     spacing: 10
     lst_note:lst_note
+    
+    lst_notas:lst_notas
     
     TabbedPanel:
         do_default_tab: False
@@ -393,8 +413,8 @@
                         size_hint_x: None
                         
                 ScrollBox:
+                    id: lst_notas
                     orientation: "vertical"
-                    Ticket:
 
         TabbedPanelItem:
             text: "Caja"
