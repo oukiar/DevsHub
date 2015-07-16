@@ -5,13 +5,14 @@ from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 from kivy.uix.dropdown import DropDown
 from kivy.uix.button import Button
-
+from kivy.core.window import Window
 from kivy.properties import ObjectProperty, StringProperty
 
 from datepicker import DatePicker
 
 import time
 
+Window.set_icon("pos.png")
 
 class AddClient(BoxLayout):
     pass

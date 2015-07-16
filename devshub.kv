@@ -395,7 +395,9 @@
                 ScrollBox:
                     orientation: "vertical"
                     Ticket:
-                    
+
+        TabbedPanelItem:
+            text: "Caja"
 
 <MainMenu@BoxLayout>:
 	size_hint_y: None
@@ -408,6 +410,9 @@
 		on_press: app.root.changeTab(app.root.inventario)
 	Button: 
 		text: "Clientes"
+		on_press: app.root.changeTab(app.root.addclient)
+	Button:
+		text: "Estadisticas"
 		on_press: app.root.changeTab(app.root.addclient)
 
 <Main>:
