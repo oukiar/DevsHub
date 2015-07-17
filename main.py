@@ -213,6 +213,9 @@ class DevsHub(FloatLayout):
 
 
     def saveClient(self, w):
+        
+        MessageBoxTime(title="Espere", size_hint=(None,None), size=(350,120), msg="Guardando", duration=2).open()
+        
         cliente = Clientes()
         cliente.Name = w.parent.txt_name.text
         cliente.Direccion = w.parent.txt_direccion.text
@@ -220,6 +223,13 @@ class DevsHub(FloatLayout):
         cliente.IFE = w.parent.txt_ife.text
         cliente.Monedero = w.parent.txt_monedero.text
         cliente.save()
+        
+        w.parent.txt_name.text = ""
+        w.parent.txt_direccion.text = ""
+        w.parent.txt_telefono.text = ""
+        w.parent.txt_ife.text = ""
+        w.parent.txt_monedero.text = ""
+        
         
     def changeTab(self, tabToShow):
         self.main.workSpace.remove_widget(self.currentTab)
