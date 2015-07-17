@@ -9,6 +9,7 @@ from kivy.core.window import Window
 from kivy.properties import ObjectProperty, StringProperty
 
 from datepicker import DatePicker
+from devslib.utils import MessageBoxTime
 
 import time
 
@@ -24,7 +25,20 @@ class NoteReg(BoxLayout):
     pass
 
 class Pos(BoxLayout):
+    
+    def __init__(self, **kwargs):
+        super(Pos, self).__init__(**kwargs)
+        
+        self.cliente = None
+    
     def hacerNota(self):
+        
+        if self.txt_client.text == "":
+            MessageBoxTime(title="Ops", size_hint=(None,None), size=(350,120), msg="Por favor especifica el cliente", duration=2).open()
+            return
+        elif self.cliente == None:
+            MessageBoxTime(title="Espere", size_hint=(None,None), size=(350,120), msg="Guardando cliente", duration=2).open()
+        
         print "Realizando nota"
         nota = Notas()
         nota.PUser = app.root.user
@@ -53,6 +67,8 @@ class Pos(BoxLayout):
         self.txt_client.text = ""
         self.txt_total.text = "0"
         self.img_button.source = "plus.png"
+        
+        self.cliente = None
         
     def on_completeclient(self, w):
         
@@ -105,7 +121,8 @@ class Pos(BoxLayout):
             print i
             notareg = NoteReg()
             notareg.txt_fecha.text = str(i.createdAt)
-            notareg.txt_cliente.text = i.Cliente.Name
+            if i.Cliente != None:
+                notareg.txt_cliente.text = i.Cliente.Name
             notareg.txt_total.text = str(i.Total)
             
             self.lst_notas.add_widget(notareg)
