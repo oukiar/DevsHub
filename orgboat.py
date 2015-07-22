@@ -9,6 +9,9 @@ from datepicker import DatePicker
 from devslib.scrollbox import ScrollBox
 
 
+from kivy.core.window import Window
+Window.set_icon("orgboat.png")
+
 class TaskMenu(Popup):
 
     taskItem = ObjectProperty()
