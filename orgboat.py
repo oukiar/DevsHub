@@ -12,6 +12,25 @@ from devslib.scrollbox import ScrollBox
 from kivy.core.window import Window
 Window.set_icon("orgboat.png")
 
+class NewJobActivity(Popup):
+    txt_title = ObjectProperty()
+    txt_description = ObjectProperty()
+    def addJobActivity(self):
+        print "Saving job activity"
+
+        jobactivity = JobActivities()
+        jobactivity.Title = self.txt_title.text
+        jobactivity.Description = self.txt_description.text
+        jobactivity.PUser = app.root.user
+        jobactivity.save()
+
+        self.dismiss()
+
+class JobActivities(BoxLayout):
+    def updateList(self):
+        for jobact in app.root.jobactivities:
+
+
 class TaskMenu(Popup):
 
     taskItem = ObjectProperty()
@@ -156,13 +175,20 @@ class Orgboat(BoxLayout):
         
         #save the active section for successfull section change
         self.currentTab = self.main.profile
-        
+
+        #cache de datos
+        self.jobactivities = JobActivities.Query.filter(PUser__in=[app.root.user]).order_by("-createdAt")
+
         #inicializar interfaz de usuario
         self.battleplan.updateList()
+
+    def openNewJobActivity(self):
+        NewJobActivity().open()
 
 #parse stuff
 try:
     Tareas = Object.factory("Tareas")
+    JobActivities = Object.factory("JobActivities")
 except:
     from parse_rest.connection import register, ParseBatcher
     from parse_rest.datatypes import Object
@@ -172,7 +198,8 @@ except:
     register("hwKXR17rbtIP6ER9QL5AvQ5IM7ll17b1Iy3x4uTf", "1TifCFsTXIpUqlcZ0frTyCDHqW5HrCGtW10kqtpS")
 
     Tareas = Object.factory("Tareas")
-    
+    JobActivities = Object.factory("JobActivities")
+
     
 
 if __name__ == "__main__":

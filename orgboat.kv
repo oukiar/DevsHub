@@ -117,6 +117,7 @@
 	
 	BlackLabel:
 		text: "Job description"
+		font_size: 24
 		size_hint_y: None
 		height: 50
 	TextInput:
@@ -129,14 +130,44 @@
 	BlackLabel:
 		text: "OJBXPRO"
 		size_hint_x: None
-		width: 50
+		width: 80
 		
 	BlackLabel:
 		text: "Desarrollo del sistema OJBX nueva version"
 
-<JobActivities@BoxLayout>:
+<NewJobActivity>:
+	txt_title:txt_title
+	txt_description:txt_description
+	size_hint: (None,None)
+	size: (400,300)
+	title: "New activity"
+	BoxLayout:
+		spacing: 10
+		padding: 10
+		orientation: "vertical"
+		BoxLayout:
+			size_hint_y: None
+			height: 40
+			spacing: 10
+			Label:
+				text: "Activity title"
+			TextInput:
+				id: txt_title
+		BoxLayout:
+			spacing: 10
+			Label:
+				text: "Description"
+			TextInput:
+				id: txt_description
+		Button:
+			size_hint_y: None
+			height: 50
+			text: "Add job activity"
+			on_press: root.addJobActivity()
+
+<JobActivities>:
 	size_hint_y:None
-	height: 300
+	height: 400
 	orientation: "vertical"
 	
 	padding:50
@@ -150,8 +181,14 @@
 	
 	BlackLabel:
 		text: "Job activities"
+		font_size: 24
 		size_hint_y: None
-		height: 50
+		height: 40
+	ImageButton:
+		source: "plus.png"
+		on_press: app.root.openNewJobActivity()
+		size_hint_y: None
+		height:30
 	BoxLayout:
 		size_hint_y: None
 		height: 50
@@ -606,7 +643,7 @@
 			
 			canvas.before:            
 				Color:
-					rgba: .9, .9, 1, 1
+					rgba: .9, .9, .9, 1
 				Rectangle:
 					pos: self.pos
 					size: self.size 
