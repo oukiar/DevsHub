@@ -29,7 +29,7 @@ class NewJobActivity(Popup):
 class JobActivities(BoxLayout):
     def updateList(self):
         for jobact in app.root.jobactivities:
-
+            print jobact.Title
 
 class TaskMenu(Popup):
 
