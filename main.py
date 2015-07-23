@@ -10,10 +10,12 @@ from kivy.properties import ObjectProperty, StringProperty
 import os
 
 from datepicker import DatePicker
+
 try:
     from devslib.utils import MessageBoxTime
 except:
     os.system("git clone https://github.com/oukiar/devslib")
+    from devslib.utils import MessageBoxTime
     
 import time
 

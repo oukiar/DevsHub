@@ -6,7 +6,14 @@ from kivy.properties import ObjectProperty, StringProperty
 
 from datepicker import DatePicker
 
-from devslib.scrollbox import ScrollBox
+try:
+    from devslib.utils import MessageBoxTime
+    from devslib.scrollbox import ScrollBox
+except:
+    os.system("git clone https://github.com/oukiar/devslib")
+    from devslib.utils import MessageBoxTime
+    from devslib.scrollbox import ScrollBox
+
 
 
 from kivy.core.window import Window
