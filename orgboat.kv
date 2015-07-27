@@ -6,292 +6,307 @@
 <BlackLabel@Label>:
     color: (0,0,0,1)
 
+<LabelTableHead@Label>:
+
+    color: (0,0,0,1)
+
+    canvas.before:
+        Color:
+            rgba: .3, .3, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<SessionMenu>:
+    Label:
+        text: "Close session"
+
 <StaffItem@BoxLayout>:
-	size_hint_y: None
-	height: 40
-	spacing: 5
-	ImageButton:
-		source: "profiledefault.png"
-		size_hint_x: None
-		width: 32
-	Label:
-		text: "Username"
-		text_size: self.size
-		halign: 'left'
-		valign: 'middle'
-		font_size: 14
-	ImageButton:
-		source: "star.png"
-		size_hint_x: None
-		width: 20
-	ImageButton:
-		source: "subor.png"
-		size_hint_x: None
-		width: 20
-	ImageButton:
-		source: "chat.png"
-		size_hint_x: None
-		width: 20
+    size_hint_y: None
+    height: 40
+    spacing: 5
+    ImageButton:
+        source: "profiledefault.png"
+        size_hint_x: None
+        width: 32
+    Label:
+        text: "Username"
+        text_size: self.size
+        halign: 'left'
+        valign: 'middle'
+        font_size: 14
+    ImageButton:
+        source: "star.png"
+        size_hint_x: None
+        width: 20
+    ImageButton:
+        source: "subor.png"
+        size_hint_x: None
+        width: 20
+    ImageButton:
+        source: "chat.png"
+        size_hint_x: None
+        width: 20
 
 <MainMenu@BoxLayout>:
-	size_hint_y: None
-	height: 70
-	Button: 
-		text: "Profile"
-		on_press: app.root.changeTab(app.root.profile)
-	Button: 
-		text: "Battle plans"
-		on_press: app.root.changeTab(app.root.battleplan)
-	Button: 
-		text: "Reports"
-		on_press: app.root.changeTab(app.root.reports)
-	Button: 
-		text: "Commendations"
-		on_press: app.root.changeTab(app.root.commendations)
-	Button: 
-		text: "Stats"
-		on_press: app.root.changeTab(app.root.stats)
+    size_hint_y: None
+    height: 70
+    Button:
+        text: "Profile"
+        on_press: app.root.changeTab(app.root.profile)
+    Button:
+        text: "Battle plans"
+        on_press: app.root.changeTab(app.root.battleplan)
+    Button:
+        text: "Reports"
+        on_press: app.root.changeTab(app.root.reports)
+    Button:
+        text: "Commendations"
+        on_press: app.root.changeTab(app.root.commendations)
+    Button:
+        text: "Stats"
+        on_press: app.root.changeTab(app.root.stats)
 
 <ProfileInformation@BoxLayout>:
-	padding:50
-	spacing: 20
-	size_hint_y: None
-	height: 300
-	canvas.before:            
-		Color:
-			rgba: 1, 1, 1, 1
-		Rectangle:
-			pos: self.pos
-			size: self.size 
+    padding:50
+    spacing: 20
+    size_hint_y: None
+    height: 300
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
-	Image:
-		source: "profilepicturebig.jpg"
-	BoxLayout:
-		spacing: 20
-		BoxLayout:
-			spacing:10
-			orientation: "vertical"
-			
-			BlackLabel:
-				text: "Gender:"
-			BlackLabel:
-				text: "Tel:"
-			BlackLabel:
-				text: "Cellphone"
-			BlackLabel:
-				text: "Email"
-			BlackLabel:
-				text: "Job position"
-			BlackLabel:
-				text: "Role"
-				
-		BoxLayout:
-			orientation: "vertical"
-			spacing: 10
-			TextInput:
-				text: "Female"
-			TextInput:
-				text: "334768754"
-			TextInput:
-				text: "898963245"
-			TextInput:
-				text: "erica@gmail.com"
-			TextInput:
-				text: "Director"
-			TextInput:
-				text: "Director"
+    Image:
+        source: "profilepicturebig.jpg"
+    BoxLayout:
+        spacing: 20
+        BoxLayout:
+            spacing:10
+            orientation: "vertical"
+
+            BlackLabel:
+                text: "Gender:"
+            BlackLabel:
+                text: "Tel:"
+            BlackLabel:
+                text: "Cellphone"
+            BlackLabel:
+                text: "Email"
+            BlackLabel:
+                text: "Job position"
+            BlackLabel:
+                text: "Role"
+
+        BoxLayout:
+            orientation: "vertical"
+            spacing: 10
+            TextInput:
+                text: "Female"
+            TextInput:
+                text: "334768754"
+            TextInput:
+                text: "898963245"
+            TextInput:
+                text: "erica@gmail.com"
+            TextInput:
+                text: "Director"
+            TextInput:
+                text: "Director"
 
 <JobDescription@BoxLayout>
-	size_hint_y:None
-	height: 300
-	orientation: "vertical"
-	
-	padding:50
-	spacing: 20
-	canvas.before:            
-		Color:
-			rgba: 1, 1, 1, 1
-		Rectangle:
-			pos: self.pos
-			size: self.size 
-	
-	BlackLabel:
-		text: "Job description"
-		font_size: 24
-		size_hint_y: None
-		height: 50
-	TextInput:
-		text: "This is a largelarge description"
+    size_hint_y:None
+    height: 300
+    orientation: "vertical"
 
-<JobActivity@BoxLayout>:
+    padding:50
+    spacing: 20
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
-	size_hint_y: None
-	height: 30
-	BlackLabel:
-		text: "OJBXPRO"
-		size_hint_x: None
-		width: 80
-		
-	BlackLabel:
-		text: "Desarrollo del sistema OJBX nueva version"
+    BlackLabel:
+        text: "Job description"
+        font_size: 24
+        size_hint_y: None
+        height: 50
+    TextInput:
+        text: "This is a largelarge description"
+
+<JobActivity>:
+    title:title
+    description:description
+    size_hint_y: None
+    height: 30
+    BlackLabel:
+        text: "OJBXPRO"
+        size_hint_x: None
+        width: 80
+        id: title
+    BlackLabel:
+        text: "Desarrollo del sistema OJBX nueva version"
+        id: description
+        text_size: self.width, None
+        size: self.texture_size
 
 <NewJobActivity>:
-	txt_title:txt_title
-	txt_description:txt_description
-	size_hint: (None,None)
-	size: (400,300)
-	title: "New activity"
-	BoxLayout:
-		spacing: 10
-		padding: 10
-		orientation: "vertical"
-		BoxLayout:
-			size_hint_y: None
-			height: 40
-			spacing: 10
-			Label:
-				text: "Activity title"
-			TextInput:
-				id: txt_title
-		BoxLayout:
-			spacing: 10
-			Label:
-				text: "Description"
-			TextInput:
-				id: txt_description
-		Button:
-			size_hint_y: None
-			height: 50
-			text: "Add job activity"
-			on_press: root.addJobActivity()
+    txt_title:txt_title
+    txt_description:txt_description
+    size_hint: (None,None)
+    size: (400,300)
+    title: "New activity"
+    BoxLayout:
+        spacing: 10
+        padding: 10
+        orientation: "vertical"
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            spacing: 10
+            Label:
+                text: "Activity title"
+            TextInput:
+                id: txt_title
+        BoxLayout:
+            spacing: 10
+            Label:
+                text: "Description"
+            TextInput:
+                id: txt_description
+        Button:
+            size_hint_y: None
+            height: 50
+            text: "Add job activity"
+            on_press: root.addJobActivity()
 
-<JobActivities>:
-	size_hint_y:None
-	height: 400
-	orientation: "vertical"
-	
-	padding:50
-	spacing: 20
-	canvas.before:            
-		Color:
-			rgba: 1, 1, 1, 1
-		Rectangle:
-			pos: self.pos
-			size: self.size 
-	
-	BlackLabel:
-		text: "Job activities"
-		font_size: 24
-		size_hint_y: None
-		height: 40
-	ImageButton:
-		source: "plus.png"
-		on_press: app.root.openNewJobActivity()
-		size_hint_y: None
-		height:30
-	BoxLayout:
-		size_hint_y: None
-		height: 50
-		BlackLabel:
-			text: "Activity"
-			size_hint_x: None
-			width: 50
-			
-		BlackLabel:
-			text: "Description"
-			
-	ScrollBox:
-		orientation: "vertical"
-		JobActivity:
-		JobActivity:
-		JobActivity:
-		JobActivity:
-		JobActivity:
-		JobActivity:
-		JobActivity:
-		JobActivity:
+
+
+<JobActivitiesTable>:
+    jobactivitieslist:jobactivitieslist
+    size_hint_y:None
+    height: 700
+    orientation: "vertical"
+
+    padding:50
+    spacing: 20
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BlackLabel:
+        text: "Job activities"
+        font_size: 24
+        size_hint_y: None
+        height: 40
+    ImageButton:
+        source: "plus.png"
+        on_press: app.root.openNewJobActivity()
+        size_hint_y: None
+        height:30
+    BoxLayout:
+        size_hint_y: None
+        height: 50
+        LabelTableHead:
+            text: "Activity"
+            size_hint_x: None
+            width: 80
+
+        LabelTableHead:
+            text: "Description"
+
+    ScrollBox:
+        id: jobactivitieslist
+        orientation: "vertical"
 
 <ReportItem@BoxLayout>:
-	size_hint_y: None
-	height: 40
-	BlackLabel:
-		text: "Warm"
-	BlackLabel:
-		text: "Oscar Alcantara"
-	BlackLabel:
-		text: "David Delgadillo"
-	BlackLabel:
-		text: "None"
-		
+    size_hint_y: None
+    height: 40
+    BlackLabel:
+        text: "Warm"
+    BlackLabel:
+        text: "Oscar Alcantara"
+    BlackLabel:
+        text: "David Delgadillo"
+    BlackLabel:
+        text: "None"
+
 
 <Reports>:
-	orientation: "vertical"
-	ImageButton:
-		source: "plus.png"
-		size_hint_y: None
-		
-	BoxLayout:
-		size_hint_y: None
-	
-		BlackLabel:
-			text: "TYPE"
-		BlackLabel:
-			text: "WROTE BY"
-		BlackLabel:
-			text: "INFRACTOR"
-		BlackLabel:
-			text: "ATACHMENTS"
-			
-	ScrollBox:
-		orientation: "vertical"
-		ReportItem:
-		ReportItem:
-		ReportItem:
+    orientation: "vertical"
+    ImageButton:
+        source: "plus.png"
+        size_hint_y: None
+
+    BoxLayout:
+        size_hint_y: None
+
+        BlackLabel:
+            text: "TYPE"
+        BlackLabel:
+            text: "WROTE BY"
+        BlackLabel:
+            text: "INFRACTOR"
+        BlackLabel:
+            text: "ATACHMENTS"
+
+    ScrollBox:
+        orientation: "vertical"
+        ReportItem:
+        ReportItem:
+        ReportItem:
 
 <CommendationItem@BoxLayout>:
-	size_hint_y: None
-	height: 40
-	BlackLabel:
-		text: "Warm"
-	BlackLabel:
-		text: "Oscar Alcantara"
-	BlackLabel:
-		text: "David Delgadillo"
-	BlackLabel:
-		text: "None"				
+    size_hint_y: None
+    height: 40
+    BlackLabel:
+        text: "Warm"
+    BlackLabel:
+        text: "Oscar Alcantara"
+    BlackLabel:
+        text: "David Delgadillo"
+    BlackLabel:
+        text: "None"
 
 <Commendations>:
 
-	orientation: "vertical"
-	ImageButton:
-		source: "plus.png"
-		size_hint_y: None
-		
-	BoxLayout:
-		size_hint_y: None
-	
-		BlackLabel:
-			text: "TYPE"
-		BlackLabel:
-			text: "WROTE BY"
-		BlackLabel:
-			text: "INFRACTOR"
-		BlackLabel:
-			text: "ATACHMENTS"
-			
-	ScrollBox:
-		orientation: "vertical"
-		CommendationItem:
-		CommendationItem:
-		CommendationItem:
-		CommendationItem:
-		CommendationItem:
-		CommendationItem:
-		CommendationItem:
+    orientation: "vertical"
+    ImageButton:
+        source: "plus.png"
+        size_hint_y: None
+
+    BoxLayout:
+        size_hint_y: None
+
+        BlackLabel:
+            text: "TYPE"
+        BlackLabel:
+            text: "WROTE BY"
+        BlackLabel:
+            text: "INFRACTOR"
+        BlackLabel:
+            text: "ATACHMENTS"
+
+    ScrollBox:
+        orientation: "vertical"
+        CommendationItem:
+        CommendationItem:
+        CommendationItem:
+        CommendationItem:
+        CommendationItem:
+        CommendationItem:
+        CommendationItem:
 
 <Stats>:
-	BlackLabel:
-		text: "STATS"
+    BlackLabel:
+        text: "STATS"
 
 <TaskMenu>:
     size_hint: (None,None)
@@ -311,7 +326,7 @@
                 multiline: False
                 write_tab: False
                 id: txt_tarea
-                
+
         BoxLayout:
             size_hint_y: None
             height: 40
@@ -320,7 +335,7 @@
             Spinner:
                 values: ("Pending", "In progress", "Done")
                 id: lst_status
-                
+
         BoxLayout:
             size_hint_y: None
             height: 40
@@ -333,7 +348,7 @@
             Spinner:
                 values: ("Privado", "Publico")
                 text: "Privado"
-                
+
         BoxLayout:
             padding: 5
             orientation: "vertical"
@@ -342,19 +357,47 @@
                 size_hint_y: None
                 height: 40
             DatePicker:
-        
+
         Button:
             text: "Guardar"
             size_hint_y: None
             height: 50
             on_press: root.selfSave()
-            
+
         Button:
             text: "Eliminar"
             size_hint_y: None
             height: 50
             on_press: root.selfDelete()
 
+<TaskStatusMenu>:
+    size_hint_x: None
+    width:160
+    ImageButton:
+        size_hint_x: None
+        width: 32
+        source: "menu_inprogress.png"
+        on_press: root.on_changestatus('In progress')
+    ImageButton:
+        size_hint_x: None
+        width: 32
+        source: "menu_done.png"
+        on_press: root.on_changestatus('Done')
+    ImageButton:
+        size_hint_x: None
+        width: 32
+        source: "menu_expired.png"
+        on_press: root.on_changestatus('Expired')
+    ImageButton:
+        size_hint_x: None
+        width: 32
+        source: "menu_config.png"
+        on_press: root.on_options()
+    ImageButton:
+        size_hint_x: None
+        width: 32
+        source: "menu_close.png"
+        on_press: root.on_close()
 
 <BattlePlanItem@BoxLayout>:
     tasktext:tasktext
@@ -372,27 +415,30 @@
         color: (0,0,0,1)
         text_size: self.width, None
         size: self.texture_size
-        
+
 <BattlePlan>:
     orientation: "vertical"
     padding:20
     spacing:20
     tasks:tasks
     tasktext:tasktext
-    
-    canvas.before:            
+    filter:filter
+
+    canvas.before:
         Color:
             rgba: 1, 1, 1, 1
         Rectangle:
             pos: self.pos
-            size: self.size 
-    
+            size: self.size
+
     Label:
         font_size: 45
         text: "Plan de batalla"
         color:(0,0,0,1)
         size_hint_y: None
         height: 100
+
+
     AnchorLayout:
         size_hint_y: None
         height: 40
@@ -404,12 +450,22 @@
                 multiline: False
                 id: tasktext
                 on_text_validate: root.addTask()
-                
+                hint_text: "New task"
+
             ImageButton:
                 source: "update.png"
                 size_hint_x: None
                 width: 50
-        
+                on_press: root.updateList()
+
+    Spinner:
+        id: filter
+        size_hint: (None,None)
+        height: 40
+        width: 200
+        values: ("Today", "Yesterday", "This week", "This month", "Last month", "Date interval", "Expireds", "Pendings", "In progress", "Dones")
+        text: "Today"
+
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "top"
@@ -421,244 +477,246 @@
             width: 600
 
 <SideMenu@BoxLayout>:
-	orientation: "vertical"
-	size_hint_x: None
-	width: 300
-	BoxLayout:			
-		size_hint_y: None
-		height: 50
-		canvas.before:            
-			Color:
-				rgba: .1, .1, 1, 1
-			Rectangle:
-				pos: self.pos
-				size: self.size 
-		Label:
-			text: "Demolition"
-		ImageButton:
-			source: "menu.png"
-	BoxLayout:
-		padding:10
-		size_hint_y: None
-		height: 60 
-		canvas.before:            
-			Color:
-				rgba: .3, .3, .3, 1
-			Rectangle:
-				pos: self.pos
-				size: self.size 
-		
-		BoxLayout:   
-			padding: 5
-			canvas.before:            
-				Color:
-					rgba: .1, .1, .1, 1
-				Rectangle:
-					pos: self.pos
-					size: self.size          
-		
-			TextInput:                
-				background_normal: ""
-				background_active: ""
-				background_color: .1,.1,.1,1
-				foreground_color: 1,1,1,1
-				hint_text: "Search"
-				
-			ImageButton:
-				source: "search.png"
-				size_hint_x: None
-				width:40
-				
-	BoxLayout:
-		padding: 20
-		size_hint_y: None
-		ImageButton:
-			source: "profilepicture.jpg"
-			size_hint_x: None
-			width: 80
-		BoxLayout:
-			orientation: "vertical"
-			Label:
-				font_size: 24
-				text: "Erica monroy"
-			Label:
-				font_size: 20
-				text: "erica@gmail.com"
+    orientation: "vertical"
+    size_hint_x: None
+    width: 300
+    BoxLayout:
+        size_hint_y: None
+        height: 50
+        canvas.before:
+            Color:
+                rgba: .1, .1, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            text: "Demolition"
+        ImageButton:
+            source: "menu.png"
+            on_press: SessionMenu().open(self)
 
-	BoxLayout:
-		size_hint_y: None
-		spacing: 5
-		padding: 5
-		height: 50
-		
-		canvas.before:            
-			Color:
-				rgba: .3, .3, .3, 1
-			Rectangle:
-				pos: self.pos
-				size: self.size 
-		
-		
-		Image:
-			source: "staff.png"
-			size_hint_x: None
-			width: 40
-		Label: 
-			text: "DIVISION"
-			font_size: 16
-			text_size: self.size
-			halign: 'left'
-			valign: 'middle'
-		ImageButton:
-			source: "plus.png"
-			size_hint_x: None
-		
-	BoxLayout:
-		size_hint_y: None
-		spacing: 5
-		padding: 5
-		height: 50
-		
-		canvas.before:            
-			Color:
-				rgba: .3, .3, .3, 1
-			Rectangle:
-				pos: self.pos
-				size: self.size 
+    BoxLayout:
+        padding:10
+        size_hint_y: None
+        height: 60
+        canvas.before:
+            Color:
+                rgba: .3, .3, .3, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
 
-		Image:
-			source: "staff.png"
-			size_hint_x: None
-			width: 40
-		Label: 
-			text: "STAFF"
-			font_size: 16
-			text_size: self.size
-			halign: 'left'
-			valign: 'middle'
-		ImageButton:
-			source: "plus.png"
-			size_hint_x: None
-		
-	BoxLayout:
-		padding: (10, 0)
-		ScrollBox:
-			orientation: "vertical"
-			StaffItem:
-			StaffItem:
-			StaffItem:
+        BoxLayout:
+            padding: 5
+            canvas.before:
+                Color:
+                    rgba: .1, .1, .1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            TextInput:
+                background_normal: ""
+                background_active: ""
+                background_color: .1,.1,.1,1
+                foreground_color: 1,1,1,1
+                hint_text: "Search"
+
+            ImageButton:
+                source: "search.png"
+                size_hint_x: None
+                width:40
+
+    BoxLayout:
+        padding: 20
+        size_hint_y: None
+        ImageButton:
+            source: "profilepicture.jpg"
+            size_hint_x: None
+            width: 80
+        BoxLayout:
+            orientation: "vertical"
+            Label:
+                font_size: 24
+                text: "Erica monroy"
+            Label:
+                font_size: 20
+                text: "erica@gmail.com"
+
+    BoxLayout:
+        size_hint_y: None
+        spacing: 5
+        padding: 5
+        height: 50
+
+        canvas.before:
+            Color:
+                rgba: .3, .3, .3, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
 
 
-	BoxLayout:
-		size_hint_y: None
-		spacing: 5
-		padding: 5
-		height: 50
-		
-		canvas.before:            
-			Color:
-				rgba: .3, .3, .3, 1
-			Rectangle:
-				pos: self.pos
-				size: self.size 
+        Image:
+            source: "staff.png"
+            size_hint_x: None
+            width: 40
+        Label:
+            text: "DIVISION"
+            font_size: 16
+            text_size: self.size
+            halign: 'left'
+            valign: 'middle'
+        ImageButton:
+            source: "plus.png"
+            size_hint_x: None
 
-		Image:
-			source: "staff.png"
-			size_hint_x: None
-			width: 40
-		Label: 
-			text: "RECENT MESSAGES"
-			font_size: 16
-			text_size: self.size
-			halign: 'left'
-			valign: 'middle'
-		
-		
-	ScrollBox:
-		orientation: "vertical"
-		StaffItem:
-		StaffItem:
-		StaffItem:
-		StaffItem:
-		StaffItem:
-		
+    BoxLayout:
+        size_hint_y: None
+        spacing: 5
+        padding: 5
+        height: 50
 
-<Profile@ScrollBox>:
-	spacing: 20
-	orientation: "vertical"
-    
-	ProfileInformation:
-	JobDescription:
-	JobActivities:
+        canvas.before:
+            Color:
+                rgba: .3, .3, .3, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Image:
+            source: "staff.png"
+            size_hint_x: None
+            width: 40
+        Label:
+            text: "STAFF"
+            font_size: 16
+            text_size: self.size
+            halign: 'left'
+            valign: 'middle'
+        ImageButton:
+            source: "plus.png"
+            size_hint_x: None
+
+    BoxLayout:
+        padding: (10, 0)
+        ScrollBox:
+            orientation: "vertical"
+            StaffItem:
+            StaffItem:
+            StaffItem:
+
+
+    BoxLayout:
+        size_hint_y: None
+        spacing: 5
+        padding: 5
+        height: 50
+
+        canvas.before:
+            Color:
+                rgba: .3, .3, .3, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Image:
+            source: "staff.png"
+            size_hint_x: None
+            width: 40
+        Label:
+            text: "RECENT MESSAGES"
+            font_size: 16
+            text_size: self.size
+            halign: 'left'
+            valign: 'middle'
+
+
+    ScrollBox:
+        orientation: "vertical"
+        StaffItem:
+        StaffItem:
+        StaffItem:
+        StaffItem:
+        StaffItem:
+
+
+<Profile>:
+    jobactivitiestable:jobactivitiestable
+    ScrollBox:
+        spacing: 20
+        orientation: "vertical"
+
+        ProfileInformation:
+        JobDescription:
+        JobActivitiesTable:
+            id: jobactivitiestable
 
 <Main>:
 
-	menu:menu
-	workSpace:workSpace
+    menu:menu
+    workSpace:workSpace
     txt_information:txt_information
-    profile:profile
-    
-	canvas.before:            
-		Color:
-			rgba: .25, .25, .3, 1
-		Rectangle:
-			pos: self.pos
-			size: self.size 
 
-	SideMenu:
-		id: menu
-	BoxLayout:
-		canvas.before:            
-			Color:
-				rgba: 1, 1, 1, 1
-			Rectangle:
-				pos: self.pos
-				size: self.size 
-		orientation: "vertical"	
-		BoxLayout:
-			size_hint_y: None
-			height: 50
-			
-			BlackLabel: 
-				text: "Information"
+    canvas.before:
+        Color:
+            rgba: .25, .25, .3, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    SideMenu:
+        id: menu
+    BoxLayout:
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        orientation: "vertical"
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+
+            BlackLabel:
+                text: "Information"
                 id: txt_information
-			ImageButton:
-				source: "star.png"
-				size_hint_x: None
-				width: 20
-			ImageButton:
-				source: "subor.png"
-				size_hint_x: None
-				width: 20
-			ImageButton:
-				source: "chat.png"
-				size_hint_x: None
-				width: 20
-				
-		BoxLayout:
-			id: workSpace
-			padding: 10
-			spacing: 20
-			orientation: "vertical"
-			
-			canvas.before:            
-				Color:
-					rgba: .9, .9, .9, 1
-				Rectangle:
-					pos: self.pos
-					size: self.size 
-			
-			BlackLabel:
-				size_hint_y: None
-				height: 50
-				font_size: 32
-				color: (0,0,0,1)
-				text: "Erica monroy"
-				
-			MainMenu:
-            
-            Profile:
-                id: profile
+            ImageButton:
+                source: "star.png"
+                size_hint_x: None
+                width: 20
+            ImageButton:
+                source: "subor.png"
+                size_hint_x: None
+                width: 20
+            ImageButton:
+                source: "chat.png"
+                size_hint_x: None
+                width: 20
+
+        BoxLayout:
+            id: workSpace
+            padding: 10
+            spacing: 20
+            orientation: "vertical"
+
+            canvas.before:
+                Color:
+                    rgba: .9, .9, .9, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            BlackLabel:
+                size_hint_y: None
+                height: 50
+                font_size: 32
+                color: (0,0,0,1)
+                text: "Your name here"
+
+            MainMenu:
+
 
 <Orgboat>:
     Login:
