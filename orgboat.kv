@@ -47,10 +47,11 @@
         height: 40
     Image:
         source: "separator.png"
-    Label:
+    Button:
         text: "Close session"
         size_hint_y: None
         height: 40
+        on_release: app.root.logout()
     Image:
         source: "separator.png"
 
