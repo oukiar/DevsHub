@@ -28,6 +28,11 @@ Window.set_icon("orgboat.png")
 class SessionMenu(DropDown):
     pass
 
+class SideMenu(BoxLayout):
+    def openSessionMenu(self):
+        self.menu = SessionMenu()
+        self.menu.open(self.orgname)
+
 class Profile(BoxLayout):
     def __init__(self, **kwargs):
         super(Profile, self).__init__(**kwargs)
@@ -67,31 +72,59 @@ class NewJobActivity(Popup):
     txt_title = ObjectProperty()
     txt_description = ObjectProperty()
     def addJobActivity(self):
-        print "Saving job activity"
+        
+        if self.btn_save.text == "Save":
+            print "Updating job activity"
+            
+            jobactivity = JobActivities.Query.get(objectId=self.objectId)
+            jobactivity.Title = self.txt_title.text
+            jobactivity.Description = self.txt_description.text
+            jobactivity.save()
+            
+            self.dismiss()
+            
+            #actualizar cache
+            app.root.jobactivitiescache = JobActivities.Query.filter(PUser__in=[app.root.user]).order_by("-createdAt")
+            
+            #actualizar tabla
+            app.root.profile.jobactivitiestable.updateList()
+            
+        else:
+            print "Adding job activity"
 
-        jobactivity = JobActivities()
-        jobactivity.Title = self.txt_title.text
-        jobactivity.Description = self.txt_description.text
-        jobactivity.PUser = app.root.user
-        jobactivity.save()
+            jobactivity = JobActivities()
+            jobactivity.Title = self.txt_title.text
+            jobactivity.Description = self.txt_description.text
+            jobactivity.PUser = app.root.user
+            jobactivity.save()
 
-        self.dismiss()
+            self.dismiss()
 
-        #add to the gui
-        act = JobActivity()
-        act.title.text = jobactivity.Title
-        act.description.text = jobactivity.Description
-        app.root.profile.jobactivitiestable.jobactivitieslist.add_widget(act)
+            #add to the gui
+            act = JobActivity()
+            act.title.text = jobactivity.Title
+            act.description.text = jobactivity.Description
+            app.root.profile.jobactivitiestable.jobactivitieslist.add_widget(act)
 
 class JobActivity(BoxLayout):
-    pass
+    def on_edit(self):
+        editjob = NewJobActivity()
+        editjob.txt_title.text = self.title.text
+        editjob.txt_description.text = self.description.text
+        editjob.btn_save.text = "Save"
+        editjob.objectId = self.objectId
+        editjob.open()
 
 class JobActivitiesTable(BoxLayout):
     def updateList(self):
+        
+        self.jobactivitieslist.clear()   
+        
         for jobact in app.root.jobactivitiescache:
             print jobact.Title
 
             act = JobActivity()
+            act.objectId = jobact.objectId
             act.title.text = jobact.Title
             act.description.text = jobact.Description
             self.jobactivitieslist.add_widget(act)

@@ -8,7 +8,7 @@
 
 <LabelTableHead@Label>:
 
-    color: (0,0,0,1)
+    color: (1,1,1,1)
 
     canvas.before:
         Color:
@@ -18,8 +18,41 @@
             size: self.size
 
 <SessionMenu>:
+    size_hint_x: None
+    width: 300
+    
+    
+    canvas.before:
+        Color:
+            rgba: .2, .2, .2, .8
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    
+    Label:
+        text: "Account billing"
+        size_hint_y: None
+        height: 40
+    Image:
+        source: "separator.png"
+    Label:
+        text: "Comunnity donations"
+        size_hint_y: None
+        height: 40
+    Image:
+        source: "separator.png"
+    Label:
+        text: "Advanced options"
+        size_hint_y: None
+        height: 40
+    Image:
+        source: "separator.png"
     Label:
         text: "Close session"
+        size_hint_y: None
+        height: 40
+    Image:
+        source: "separator.png"
 
 <StaffItem@BoxLayout>:
     size_hint_y: None
@@ -71,7 +104,7 @@
     padding:50
     spacing: 20
     size_hint_y: None
-    height: 300
+    height: 350
     canvas.before:
         Color:
             rgba: 1, 1, 1, 1
@@ -146,17 +179,23 @@
     BlackLabel:
         text: "OJBXPRO"
         size_hint_x: None
-        width: 80
+        width: 100
         id: title
     BlackLabel:
         text: "Desarrollo del sistema OJBX nueva version"
         id: description
         text_size: self.width, None
         size: self.texture_size
+    ImageButton:
+        size_hint_x: None
+        width: 40
+        source: "edit.png"
+        on_press: root.on_edit()
 
 <NewJobActivity>:
     txt_title:txt_title
     txt_description:txt_description
+    btn_save:btn_save
     size_hint: (None,None)
     size: (400,300)
     title: "New activity"
@@ -179,6 +218,7 @@
             TextInput:
                 id: txt_description
         Button:
+            id: btn_save
             size_hint_y: None
             height: 50
             text: "Add job activity"
@@ -217,10 +257,16 @@
         LabelTableHead:
             text: "Activity"
             size_hint_x: None
-            width: 80
+            width: 100
 
         LabelTableHead:
             text: "Description"
+            
+            
+        Image:
+            size_hint_x: None
+            width: 40
+            source: "btnsettings.png"
 
     ScrollBox:
         id: jobactivitieslist
@@ -476,7 +522,9 @@
             size_hint_x: None
             width: 600
 
-<SideMenu@BoxLayout>:
+<SideMenu>:
+    img_menu:img_menu
+    orgname:orgname
     orientation: "vertical"
     size_hint_x: None
     width: 300
@@ -491,9 +539,13 @@
                 size: self.size
         Label:
             text: "Demolition"
+            id: orgname
         ImageButton:
             source: "menu.png"
-            on_press: SessionMenu().open(self)
+            on_release: root.openSessionMenu()
+            id: img_menu
+            size_hint_x: None
+            width: 50
 
     BoxLayout:
         padding:10
