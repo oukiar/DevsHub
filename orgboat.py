@@ -184,6 +184,8 @@ class BattlePlan(BoxLayout):
     def __init__(self, **kwargs):
         super(BattlePlan, self).__init__(**kwargs)
         #self.updateList()
+        
+        self.completeJob = False
 
     def addTask(self):
         tarea = Tareas()
@@ -269,6 +271,28 @@ class BattlePlan(BoxLayout):
                 taskitem.img_menu.source = "menu_expired.png"
             
             self.tasks.add_widget(taskitem)
+            
+    def on_textinput(self, text):
+        pass
+        '''
+        if self.completeJob:
+            
+            
+            
+            self.jobact_keyword += text[-1]
+            print self.jobact_keyword
+            
+            for i in app.root.jobactivitiescache:
+                if self.jobact_keyword in i.Title:
+                    print i.Title
+            
+        elif len(text) > 0:
+            if text[-1] == "#":
+                print "job activity autocomplete"
+                
+                self.completeJob = True
+                self.jobact_keyword = ""
+        '''
 
 class Reports(BoxLayout):
     pass
@@ -336,6 +360,10 @@ class Orgboat(BoxLayout):
 
     def openNewJobActivity(self):
         NewJobActivity().open()
+        
+    def logout(self):
+        self.remove_widget(self.main)
+        self.add_widget(self.login)
 
 #parse stuff
 try:
