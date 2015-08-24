@@ -333,7 +333,6 @@ class Orgboat(BoxLayout):
         
         self.main = Main()
         self.main.txt_information.text = self.user.username
-        self.add_widget(self.main)
 
         #create the sections of the user interface
 
@@ -342,6 +341,8 @@ class Orgboat(BoxLayout):
         self.reports = Reports()
         self.commendations = Commendations()
         self.stats = Stats()
+
+        print "WIDTHPROFILE: ", self.profile.width, self.profile.size_hint
 
         self.currentTab = None
         self.changeTab(self.profile)
@@ -357,6 +358,8 @@ class Orgboat(BoxLayout):
         #inicializar interfaz de usuario
         self.profile.jobactivitiestable.updateList()
         self.battleplan.updateList()
+        
+        self.add_widget(self.main)
 
     def openNewJobActivity(self):
         NewJobActivity().open()
