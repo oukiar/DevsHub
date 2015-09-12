@@ -419,6 +419,70 @@
         TabbedPanelItem:
             text: "Caja"
 
+<Prestamos>:
+
+    lst_inventory:lst_inventory
+    padding: 30
+    
+    canvas.before:            
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size 
+    
+    BoxLayout:
+        orientation: 'vertical'
+        
+        canvas.before:            
+            Color:
+                rgba: .96, .96, .96, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size 
+        
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            BlackLabel:
+                size_hint_x: None
+                text: "Buscar"
+            TextInput:
+            Button:
+                size_hint_x: None
+                text: "Filtrar"
+    
+        
+        BoxLayout:
+            size_hint_y: None
+            BlackLabel: 
+                size_hint_x: None
+                text: "Clave"
+            BlackLabel: 
+                text: "Producto"
+            BlackLabel: 
+                text: "Existencias"
+                size_hint_x: None
+            BlackLabel: 
+                text: "Minimo"
+                size_hint_x: None
+            BlackLabel: 
+                text: "Maximo"
+                size_hint_x: None
+            BlackLabel:
+                text: "Precio"
+                size_hint_x: None
+            BlackLabel: 
+                text: "Add"
+                width: 40
+                size_hint_x: None
+        
+        ScrollBox:
+            orientation: "vertical"
+            id: lst_inventory
+            InventoryItem:
+
+
 <MainMenu@BoxLayout>:
 	size_hint_y: None
 	height: 60

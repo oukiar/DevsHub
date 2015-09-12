@@ -23,6 +23,12 @@ import time
 from kivy.core.window import Window
 Window.set_icon("pos.png")
 
+class Prestamos(Popup):
+    pass
+    
+class CajaGD(Popup):
+    pass
+
 class AddClient(BoxLayout):
     pass
 
