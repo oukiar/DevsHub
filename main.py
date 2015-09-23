@@ -218,6 +218,23 @@ class InventoryItem(BoxLayout):
 class Inventory(BoxLayout):
     lst_inventory = ObjectProperty()
 
+    def fillInventario(self):
+        
+        print "Llenado inventario"
+        
+        for i in app.root.inventarios:
+            print i
+            item = InventoryItem()
+            item.btn_action.source = "save.png"
+            item.txt_clave.text = str(i.Clave)
+            item.txt_producto.text = str(i.Producto)
+            item.txt_existencias.text = str(i.Existencias)
+            item.txt_minimo.text = str(i.Minimo)
+            item.txt_maximo.text = str(i.Maximo)
+            item.txt_precio.text = str(i.Precio)
+                        
+            self.lst_inventory.add_widget(item)
+
 class Main(BoxLayout):
     
     battleplan = ObjectProperty()
@@ -274,6 +291,7 @@ class DevsHub(FloatLayout):
         self.ventas.fillNotas()
         
         self.inventario = Inventory()
+        self.inventario.fillInventario()
         
         self.addclient = AddClient()
         

@@ -38,10 +38,11 @@
     TextInput:
         size_hint_x: None
         id: txt_precio
-    Button:
+    ImageButton:
         id: btn_action
         size_hint_x: None
-        text: "+"
+        #text: "+"
+        source: "plus.png"
         width: 40
         on_press: root.addInventoryItem(self)
 
