@@ -225,7 +225,7 @@ class File(ParseType, ParseBase):
             raise ParseError("Files can't be overwritten")
         uri = '/'.join([self.__class__.ENDPOINT_ROOT, self.name])
         headers = {'Content-type': self.mimetype}
-        response = self.__class__.POST(uri, extra_headers=headers, batch=batch, body=self._content)
+        response = self.__class__.POST(uri, extra_headers=headers, batch=batch, _body=self._content)
         self._file_url = response['url']
         self._name = response['name']
         self._api_url = '/'.join([API_ROOT, 'files', self._name])
@@ -455,6 +455,19 @@ class Object(six.with_metaclass(ObjectMetaclass, ParseResource)):
             }
         self.__class__.PUT(self._absolute_url, **payload)
         self.__dict__[key] += amount
+        
+    def remove(self, key):
+        """
+        Clear a column value in the object. Note that this happens immediately:
+        it does not wait for save() to be called.
+        """
+        payload = {
+            key: {
+                '__op': 'Delete'
+                }
+            }
+        self.__class__.PUT(self._absolute_url, **payload)
+        del self.__dict__[key]
 
     def removeRelation(self, key, className, objectsId):
         self.manageRelation('RemoveRelation', key, className, objectsId)

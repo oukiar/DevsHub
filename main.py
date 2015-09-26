@@ -4,12 +4,18 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 from kivy.uix.dropdown import DropDown
+from kivy.uix.image import Image
 from kivy.uix.button import Button
-from kivy.properties import ObjectProperty, StringProperty
+from kivy.properties import ObjectProperty, StringProperty, NumericProperty
+
+from kivy.animation import Animation
+from kivy.clock import Clock
 
 import os
 
 from datepicker import DatePicker
+
+from threading import Thread
 
 try:
     from devslib.utils import MessageBoxTime
@@ -17,11 +23,27 @@ except:
     os.system("git clone https://github.com/oukiar/devslib")
     from devslib.utils import MessageBoxTime
     
+from devslib.utils import alert
+    
 import time
 
 
 from kivy.core.window import Window
 Window.set_icon("pos.png")
+
+class AsyncSave(Thread):
+    def __init__(self, **kwargs):
+        
+        self.callback = kwargs.get("callback")
+        self.objsave = kwargs.get("objsave")
+        
+        Thread.__init__(self)
+        
+        self.start()
+        
+    def run(self):
+        self.objsave.save()
+        Clock.schedule_once(self.callback, 0)
 
 class Prestamos(Popup):
     pass
@@ -197,6 +219,11 @@ class NoteItem(BoxLayout):
 class InventoryItem(BoxLayout):
 
     def addInventoryItem(self, w):
+        
+        if self.txt_clave.text == "" or self.txt_producto.text == "":
+            alert("Las columnas marcadas con * son obligatorias")
+            return
+        
         inventoryitem = Inventarios()
         inventoryitem.Clave = w.parent.txt_clave.text
         inventoryitem.Producto = w.parent.txt_producto.text
@@ -206,14 +233,36 @@ class InventoryItem(BoxLayout):
         inventoryitem.Precio = w.parent.txt_precio.text
         inventoryitem.PUser = app.root.user
         
-        inventoryitem.save()
+        #inventoryitem.save()
+        AsyncSave(callback=self.item_saved, objsave=inventoryitem)
+        
+        #self.btn_action.source = "save.png"
+        self.remove_widget(self.btn_action)
+        self.loading = RotatedImage(source="newloading.png")
+        self.anim = Animation(angle=360, duration=5)
+        self.anim.bind(on_complete=self.item_timeout)
+        self.anim.start(self.loading)
+        
+        
+        self.add_widget(self.loading)
 
         newitem = InventoryItem()
-        w.text = "Save"
         
         table = self.parent.parent.parent.parent.lst_inventory
         
         table.add_widget(newitem, index=len(table.layout.children))
+        
+    def item_saved(self, dt):
+        self.anim.cancel(self.loading)
+        self.remove_widget(self.loading)
+        self.add_widget(self.btn_action)
+        self.btn_action.source = "save.png"
+    
+    def item_timeout(self, anim, w):
+        print "SAVE TIMEOUT"
+
+class RotatedImage(Image):
+    angle = NumericProperty()
 
 class Inventory(BoxLayout):
     lst_inventory = ObjectProperty()
@@ -221,19 +270,42 @@ class Inventory(BoxLayout):
     def fillInventario(self):
         
         print "Llenado inventario"
+        self.on_filtrar()
+
+            
+    def on_filtrar(self):
+        print "Filtrando"
         
-        for i in app.root.inventarios:
-            print i
-            item = InventoryItem()
-            item.btn_action.source = "save.png"
-            item.txt_clave.text = str(i.Clave)
-            item.txt_producto.text = str(i.Producto)
-            item.txt_existencias.text = str(i.Existencias)
-            item.txt_minimo.text = str(i.Minimo)
-            item.txt_maximo.text = str(i.Maximo)
-            item.txt_precio.text = str(i.Precio)
-                        
-            self.lst_inventory.add_widget(item)
+        self.lst_inventory.clear()
+        
+        
+        self.lst_inventory.add_widget(InventoryItem())
+        
+        if self.txt_filtrar.text != "":
+        
+            for i in Inventarios.Query.filter(words__all=self.txt_filtrar.text.lower().split()):
+                item = InventoryItem()
+                item.btn_action.source = "save.png"
+                item.txt_clave.text = str(i.Clave)
+                item.txt_producto.text = str(i.Producto)
+                item.txt_existencias.text = str(i.Existencias)
+                item.txt_minimo.text = str(i.Minimo)
+                item.txt_maximo.text = str(i.Maximo)
+                item.txt_precio.text = str(i.Precio)
+                            
+                self.lst_inventory.add_widget(item)
+        else:
+            for i in app.root.inventarios:
+                item = InventoryItem()
+                item.btn_action.source = "save.png"
+                item.txt_clave.text = str(i.Clave)
+                item.txt_producto.text = str(i.Producto)
+                item.txt_existencias.text = str(i.Existencias)
+                item.txt_minimo.text = str(i.Minimo)
+                item.txt_maximo.text = str(i.Maximo)
+                item.txt_precio.text = str(i.Precio)
+                            
+                self.lst_inventory.add_widget(item)
 
 class Main(BoxLayout):
     

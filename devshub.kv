@@ -2,6 +2,21 @@
 #:import ImageButton devslib.utils
 #:import DatePicker datepicker
 #:include login.kv
+#:import Loading devslib.widget3D
+
+<RotatedImage>:
+    canvas.before:
+        PushMatrix
+        Rotate:
+            angle: root.angle
+            axis: 0, 0, 1
+            origin: root.center
+    canvas.after:
+        PopMatrix
+    
+    size_hint_x: None
+    width: 40
+
 
 <Clientes>:
 
@@ -29,15 +44,25 @@
         id: txt_existencias
         multiline: False
         write_tab: False
+        text: "0"
     TextInput:
         size_hint_x: None
         id: txt_minimo
+        multiline: False
+        write_tab: False
+        text: "0"
     TextInput:
         size_hint_x: None
         id: txt_maximo
+        multiline: False
+        write_tab: False
+        text: "0"
     TextInput:
         size_hint_x: None
         id: txt_precio
+        multiline: False
+        write_tab: False
+        text: "0"
     ImageButton:
         id: btn_action
         size_hint_x: None
@@ -48,6 +73,7 @@
 
 <Inventory>:
     lst_inventory:lst_inventory
+    txt_filtrar:txt_filtrar
     padding: 30
     
     canvas.before:            
@@ -74,10 +100,11 @@
                 size_hint_x: None
                 text: "Buscar"
             TextInput:
+                id: txt_filtrar
             Button:
                 size_hint_x: None
                 text: "Filtrar"
-    
+                on_release: root.on_filtrar()
         
         BoxLayout:
             size_hint_y: None
@@ -106,7 +133,6 @@
         ScrollBox:
             orientation: "vertical"
             id: lst_inventory
-            InventoryItem:
 
 
 <AddClient>:
