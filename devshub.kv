@@ -326,10 +326,26 @@
                 BoxLayout:
                     size_hint_y: None
                     height: 40
+                    
+                    CheckBox:
+                        size_hint_x: None
+                        width: 30
+                        group: "tipo_nota"
+                        active: True
                     BlackLabel:
-                        text: "Cliente"
+                        text: "Nota de remision"
+                        
+                    CheckBox:
+                        size_hint_x: None
+                        width: 30
+                        group: "tipo_nota"
+                        on_active: root.txt_client.disabled = not args[1]
+                    BlackLabel:
+                        text: "Nota de venta cliente: "
                     TextInput:
                         id: txt_client
+                        hint_text: "Buscar o agregar cliente"
+                        disabled: True
                         on_text: root.on_completeclient(self)
                     
                     ImageButton:
