@@ -224,33 +224,37 @@ class InventoryItem(BoxLayout):
             alert("Las columnas marcadas con * son obligatorias")
             return
         
-        inventoryitem = Inventarios()
-        inventoryitem.Clave = w.parent.txt_clave.text
-        inventoryitem.Producto = w.parent.txt_producto.text
-        inventoryitem.Existencias = w.parent.txt_existencias.text
-        inventoryitem.Minimo = w.parent.txt_minimo.text
-        inventoryitem.Maximo = w.parent.txt_maximo.text
-        inventoryitem.Precio = w.parent.txt_precio.text
-        inventoryitem.PUser = app.root.user
+        if self.btn_action.source == "plus.png":
         
-        #inventoryitem.save()
-        AsyncSave(callback=self.item_saved, objsave=inventoryitem)
-        
-        #self.btn_action.source = "save.png"
-        self.remove_widget(self.btn_action)
-        self.loading = RotatedImage(source="newloading.png")
-        self.anim = Animation(angle=360, duration=5)
-        self.anim.bind(on_complete=self.item_timeout)
-        self.anim.start(self.loading)
-        
-        
-        self.add_widget(self.loading)
+            inventoryitem = Inventarios()
+            inventoryitem.Clave = w.parent.txt_clave.text
+            inventoryitem.Producto = w.parent.txt_producto.text
+            inventoryitem.Existencias = w.parent.txt_existencias.text
+            inventoryitem.Minimo = w.parent.txt_minimo.text
+            inventoryitem.Maximo = w.parent.txt_maximo.text
+            inventoryitem.Precio = w.parent.txt_precio.text
+            inventoryitem.PUser = app.root.user
+            
+            #inventoryitem.save()
+            AsyncSave(callback=self.item_saved, objsave=inventoryitem)
+            
+            #self.btn_action.source = "save.png"
+            self.remove_widget(self.btn_action)
+            self.loading = RotatedImage(source="newloading.png")
+            self.anim = Animation(angle=360, duration=5)
+            self.anim.bind(on_complete=self.item_timeout)
+            self.anim.start(self.loading)
+            
+            
+            self.add_widget(self.loading)
 
-        newitem = InventoryItem()
-        
-        table = self.parent.parent.parent.parent.lst_inventory
-        
-        table.add_widget(newitem, index=len(table.layout.children))
+            newitem = InventoryItem()
+            
+            table = self.parent.parent.parent.parent.lst_inventory
+            
+            table.add_widget(newitem, index=len(table.layout.children))
+        else: #SAVE
+            print "SAVING"
         
     def item_saved(self, dt):
         self.anim.cancel(self.loading)
