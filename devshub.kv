@@ -27,7 +27,8 @@
     txt_minimo:txt_minimo
     txt_maximo:txt_maximo
     txt_precio:txt_precio
-    btn_action:btn_action
+    lay_buttons:lay_buttons
+    btn_edit:btn_edit
     size_hint_y: None
     height: 40
     TextInput:
@@ -35,41 +36,51 @@
         id: txt_clave
         multiline: False
         write_tab: False
+        disabled: True
     TextInput:
         id: txt_producto
         multiline: False
         write_tab: False
+        disabled: True
     TextInput:
         size_hint_x: None
         id: txt_existencias
         multiline: False
         write_tab: False
+        disabled: True
         text: "0"
     TextInput:
         size_hint_x: None
         id: txt_minimo
         multiline: False
         write_tab: False
+        disabled: True
         text: "0"
     TextInput:
         size_hint_x: None
         id: txt_maximo
         multiline: False
         write_tab: False
+        disabled: True
         text: "0"
     TextInput:
         size_hint_x: None
         id: txt_precio
         multiline: False
         write_tab: False
+        disabled: True
         text: "0"
-    ImageButton:
-        id: btn_action
+        
+    BoxLayout:
         size_hint_x: None
-        #text: "+"
-        source: "plus.png"
-        width: 40
-        on_press: root.addInventoryItem(self)
+        width: 50
+        id:lay_buttons
+        padding: 5
+        
+        ImageButton:
+            id: btn_edit
+            source: "edit.png"
+            on_release: root.editInventory()
 
 <Inventory>:
     lst_inventory:lst_inventory
@@ -108,6 +119,7 @@
         
         BoxLayout:
             size_hint_y: None
+            height: 60
             BlackLabel: 
                 size_hint_x: None
                 text: "Clave*"
@@ -124,11 +136,13 @@
                 size_hint_x: None
             BlackLabel:
                 text: "Precio"
-                size_hint_x: None
-            BlackLabel: 
-                text: "Add"
+                size_hint_x: None                    
+            ImageButton:
                 width: 40
                 size_hint_x: None
+                id: btn_action
+                source: "plus.png"
+                on_release: root.addInventoryItem(self)
         
         ScrollBox:
             orientation: "vertical"

@@ -24,6 +24,7 @@ except:
     from devslib.utils import MessageBoxTime
     
 from devslib.utils import alert
+from devslib.utils import ImageButton
     
 import time
 
@@ -217,53 +218,77 @@ class NoteItem(BoxLayout):
             self.txt_total.text = str(float(self.txt_cant.text) * float(self.txt_precio.text))
 
 class InventoryItem(BoxLayout):
+    btn_save = ObjectProperty()
 
-    def addInventoryItem(self, w):
-        
-        if self.txt_clave.text == "" or self.txt_producto.text == "":
-            alert("Las columnas marcadas con * son obligatorias")
-            return
-        
-        if self.btn_action.source == "plus.png":
-        
-            inventoryitem = Inventarios()
-            inventoryitem.Clave = w.parent.txt_clave.text
-            inventoryitem.Producto = w.parent.txt_producto.text
-            inventoryitem.Existencias = w.parent.txt_existencias.text
-            inventoryitem.Minimo = w.parent.txt_minimo.text
-            inventoryitem.Maximo = w.parent.txt_maximo.text
-            inventoryitem.Precio = w.parent.txt_precio.text
-            inventoryitem.PUser = app.root.user
-            
-            #inventoryitem.save()
-            AsyncSave(callback=self.item_saved, objsave=inventoryitem)
-            
-            #self.btn_action.source = "save.png"
-            self.remove_widget(self.btn_action)
-            self.loading = RotatedImage(source="newloading.png")
-            self.anim = Animation(angle=360, duration=5)
-            self.anim.bind(on_complete=self.item_timeout)
-            self.anim.start(self.loading)
-            
-            
-            self.add_widget(self.loading)
+    def __init__(self, **kwargs):
 
-            newitem = InventoryItem()
-            
-            table = self.parent.parent.parent.parent.lst_inventory
-            
-            table.add_widget(newitem, index=len(table.layout.children))
-        else: #SAVE
-            print "SAVING"
+        super(InventoryItem, self).__init__(**kwargs)
+
+        self.btn_delete = ImageButton(source="delete.png")
+        self.btn_save = ImageButton(source="save.png", on_release=self.saveInventory)
+
+    def editInventory(self):
+        print "Edit inventory"
+        self.txt_clave.disabled = False
+        self.txt_producto.disabled = False
+        self.txt_existencias.disabled = False
+        self.txt_minimo.disabled = False
+        self.txt_maximo.disabled = False
+        self.txt_precio.disabled = False  
+        
+        self.txt_producto.focus = True
+
+        self.lay_buttons.remove_widget(self.btn_edit)
+
+        
+
+        self.lay_buttons.add_widget(self.btn_delete)
+        self.lay_buttons.add_widget(self.btn_save)
+
+    def saveInventory(self, w):
+        
+        if not hasattr(self, "dataitem"):
+            self.dataitem = Inventarios()
+        
+        self.dataitem.Clave = self.txt_clave.text
+        self.dataitem.Producto = self.txt_producto.text
+        self.dataitem.Existencias = self.txt_existencias.text
+        self.dataitem.Minimo = self.txt_minimo.text
+        self.dataitem.Maximo = self.txt_maximo.text
+        self.dataitem.Precio = self.txt_precio.text
+        self.dataitem.PUser = app.root.user
+        
+        #inventoryitem.save()
+        AsyncSave(callback=self.item_saved, objsave=self.dataitem)
+        
+        self.lay_buttons.remove_widget(self.btn_delete)
+        self.lay_buttons.remove_widget(self.btn_save)
+        
+        self.loading = RotatedImage(source="newloading.png")
+        self.anim = Animation(angle=360, duration=5)
+        self.anim.bind(on_complete=self.item_timeout)
+        self.anim.start(self.loading)
+        
+        self.lay_buttons.add_widget(self.loading)
         
     def item_saved(self, dt):
         self.anim.cancel(self.loading)
-        self.remove_widget(self.loading)
-        self.add_widget(self.btn_action)
-        self.btn_action.source = "save.png"
+        self.lay_buttons.remove_widget(self.loading)
+        self.lay_buttons.add_widget(self.btn_edit)
+        
+        #disable all
+        self.txt_clave.disabled = True
+        self.txt_producto.disabled = True
+        self.txt_existencias.disabled = True
+        self.txt_minimo.disabled = True
+        self.txt_maximo.disabled = True
+        self.txt_precio.disabled = True 
     
     def item_timeout(self, anim, w):
         print "SAVE TIMEOUT"
+        
+    def delete_inventory(self, w):
+        print "Deleting"
 
 class RotatedImage(Image):
     angle = NumericProperty()
@@ -271,6 +296,21 @@ class RotatedImage(Image):
 class Inventory(BoxLayout):
     lst_inventory = ObjectProperty()
 
+    def addInventoryItem(self, w):
+        item = InventoryItem()
+        
+        item.txt_clave.disabled = False
+        item.txt_producto.disabled = False
+        item.txt_existencias.disabled = False
+        item.txt_minimo.disabled = False
+        item.txt_maximo.disabled = False
+        item.txt_precio.disabled = False
+        
+        item.lay_buttons.remove_widget(item.btn_edit)
+        item.lay_buttons.add_widget(item.btn_save)
+        
+        self.lst_inventory.add_widget(item, index=len(self.lst_inventory.layout.children) )
+        
     def fillInventario(self):
         
         print "Llenado inventario"
@@ -282,14 +322,11 @@ class Inventory(BoxLayout):
         
         self.lst_inventory.clear()
         
-        
-        self.lst_inventory.add_widget(InventoryItem())
-        
         if self.txt_filtrar.text != "":
         
             for i in Inventarios.Query.filter(words__all=self.txt_filtrar.text.lower().split()):
                 item = InventoryItem()
-                item.btn_action.source = "save.png"
+                item.dataitem = i
                 item.txt_clave.text = str(i.Clave)
                 item.txt_producto.text = str(i.Producto)
                 item.txt_existencias.text = str(i.Existencias)
@@ -301,7 +338,7 @@ class Inventory(BoxLayout):
         else:
             for i in app.root.inventarios:
                 item = InventoryItem()
-                item.btn_action.source = "save.png"
+                item.dataitem = i
                 item.txt_clave.text = str(i.Clave)
                 item.txt_producto.text = str(i.Producto)
                 item.txt_existencias.text = str(i.Existencias)
