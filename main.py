@@ -224,7 +224,7 @@ class InventoryItem(BoxLayout):
 
         super(InventoryItem, self).__init__(**kwargs)
 
-        self.btn_delete = ImageButton(source="delete.png")
+        self.btn_delete = ImageButton(source="delete.png", on_release=self.deleteInventory)
         self.btn_save = ImageButton(source="save.png", on_release=self.saveInventory)
 
     def editInventory(self):
@@ -287,8 +287,11 @@ class InventoryItem(BoxLayout):
     def item_timeout(self, anim, w):
         print "SAVE TIMEOUT"
         
-    def delete_inventory(self, w):
+    def deleteInventory(self, w):
         print "Deleting"
+        self.dataitem.delete()
+        
+        app.root.inventario.lst_inventory.remove_widget(self)
 
 class RotatedImage(Image):
     angle = NumericProperty()
@@ -324,7 +327,7 @@ class Inventory(BoxLayout):
         
         if self.txt_filtrar.text != "":
         
-            for i in Inventarios.Query.filter(words__all=self.txt_filtrar.text.lower().split()):
+            for i in Inventarios.Query.filter(words__all=self.txt_filtrar.text.lower().split()).order_by("Producto"):
                 item = InventoryItem()
                 item.dataitem = i
                 item.txt_clave.text = str(i.Clave)
@@ -395,7 +398,7 @@ class DevsHub(FloatLayout):
         self.main.txt_username.text = self.user.username
         self.add_widget(self.main)
         
-        self.inventarios = Inventarios.Query.filter(PUser__in=[self.user])
+        self.inventarios = Inventarios.Query.filter(PUser__in=[self.user]).order_by("Producto")
         self.clientes = Clientes.Query.filter(PUser__in=[self.user])
         self.notas = Notas.Query.filter(PUser__in=[self.user])
 
