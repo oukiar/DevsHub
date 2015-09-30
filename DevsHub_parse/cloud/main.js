@@ -27,3 +27,14 @@ Parse.Cloud.beforeSave("Inventarios", function(request, response) {
     
     response.success();
 });
+
+Parse.Cloud.beforeSave("Clientes", function(request, response) {
+    var client = request.object;
+
+    var name = client.get("Name");
+    
+    client.set("Name", name.toUpperCase());
+    client.set("words", name.toUpperCase().split(" ") );
+
+    response.success();
+});

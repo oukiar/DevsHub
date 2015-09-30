@@ -118,14 +118,13 @@ class Pos(BoxLayout):
             
             found = False
             
-            for item in app.root.clientes:
-                if w.text.upper() in item.Name.upper():
-                    but = WhiteButton(text=item.Name, size_hint_y=None, height=40)
-                    but.bind(on_press=self.fillClient)
-                    but.Cliente = item
-                    self.dropdown.add_widget(but)
-                    found = True
-                    print found
+            for item in Clientes.Query.filter(words__all=w.text.upper().split() ):
+
+                but = WhiteButton(text=item.Name, size_hint_y=None, height=40)
+                but.bind(on_press=self.fillClient)
+                but.Cliente = item
+                self.dropdown.add_widget(but)
+                found = True
                     
             if found:
                 self.dropdown.open(w)
@@ -219,6 +218,8 @@ class NoteItem(BoxLayout):
 
 class InventoryItem(BoxLayout):
     btn_save = ObjectProperty()
+    btn_edit = ObjectProperty()
+    btn_delete = ObjectProperty()
 
     def __init__(self, **kwargs):
 
