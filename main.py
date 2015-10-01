@@ -218,7 +218,6 @@ class NoteItem(BoxLayout):
 
 class InventoryItem(BoxLayout):
     btn_save = ObjectProperty()
-    btn_edit = ObjectProperty()
     btn_delete = ObjectProperty()
 
     def __init__(self, **kwargs):
