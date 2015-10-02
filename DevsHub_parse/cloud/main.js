@@ -9,11 +9,15 @@ var _ = require("underscore");
 Parse.Cloud.beforeSave("Inventarios", function(request, response) {
     var prod = request.object;
 
+
     var toLowerCase = function(w) { return w.toLowerCase(); };
 
     var words = prod.get("Producto").split(" ");
     words = _.map(words, toLowerCase);
     prod.set("words", words);
+    
+    
+    prod.set("Producto", prod.get("Producto").toUpperCase() );
     
     /*
     var stopWords = ["the", "in", "and"];

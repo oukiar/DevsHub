@@ -199,6 +199,7 @@ class NoteItem(BoxLayout):
             
             self.dropdown.clear_widgets()
             
+            #for item in app.root.inventarios:
             for item in app.root.inventarios:
                 if w.text.upper() in item.Producto.upper():
                     but = WhiteButton(text=item.Producto, size_hint_y=None, height=40)
@@ -210,12 +211,13 @@ class NoteItem(BoxLayout):
             
     def fillProduct(self, w):
         
-        self.dropdown.dismiss()
         self.txt_producto.text = w.text
         self.txt_precio.text = w.Item.Precio
         if self.txt_cant.text != "":
             self.txt_total.text = str(float(self.txt_cant.text) * float(self.txt_precio.text))
 
+        self.dropdown.dismiss()
+        
 class InventoryItem(BoxLayout):
     btn_save = ObjectProperty()
     btn_delete = ObjectProperty()
@@ -327,7 +329,8 @@ class Inventory(BoxLayout):
         
         if self.txt_filtrar.text != "":
         
-            for i in Inventarios.Query.filter(words__all=self.txt_filtrar.text.lower().split()).order_by("Producto"):
+            #for i in Inventarios.Query.filter(words__all=self.txt_filtrar.text.lower().split()).order_by("Producto"):
+            for i in Inventarios.Query.filter(Producto__regex=self.txt_filtrar.text.upper(), PUser=app.root.user).order_by("Producto"):
                 item = InventoryItem()
                 item.dataitem = i
                 item.txt_clave.text = str(i.Clave)
@@ -338,7 +341,10 @@ class Inventory(BoxLayout):
                 item.txt_precio.text = str(i.Precio)
                             
                 self.lst_inventory.add_widget(item)
+                
+                
         else:
+            
             for i in app.root.inventarios:
                 item = InventoryItem()
                 item.dataitem = i
