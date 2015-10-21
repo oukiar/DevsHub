@@ -349,7 +349,7 @@ class Inventory(BoxLayout):
                 item = InventoryItem()
                 item.dataitem = i
                 item.txt_clave.text = str(i.Clave)
-                item.txt_producto.text = str(i.Producto)
+                item.txt_producto.text = str(i.Producto.encode('utf8'))
                 item.txt_existencias.text = str(i.Existencias)
                 item.txt_minimo.text = str(i.Minimo)
                 item.txt_maximo.text = str(i.Maximo)
